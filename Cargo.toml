@@ -1,0 +1,16 @@
+[package]
+name = "bindings"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.82"
+serde = {version = "1", features = ["derive"]}
+wit-bindgen-rt = "0.30"
+
+
+[package.metadata.component.bindings]
+derives = ["serde::Serialize", "serde::Deserialize", "PartialEq", "Eq", "Hash"]
+
+[package.metadata.component]
+package = "component:cliend-bindings"

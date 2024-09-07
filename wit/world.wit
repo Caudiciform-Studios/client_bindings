@@ -1,0 +1,198 @@
+package game:auto-rogue;
+
+interface types {
+    record loc {
+        x: s32,
+        y: s32,
+    }
+
+    record tile {
+        passable: bool,
+        opaque: bool,
+        name: string,
+    }
+    record creature {
+        name: string,
+        id: s64,
+        faction: u32,
+        broadcast: option<list<u8>>,
+    }
+    record item {
+        id: s64,
+        name: string,
+        is-furniture: bool,
+        is-passable: bool,
+        metadata: option<string>,
+    }
+    record inventory-item {
+        name: string,
+        id: s64,
+        level: u32,
+        actions: list<action>,
+        resources: option<resources>,
+    }
+
+    variant equipment-slot {
+        left-hand,
+        right-hand,
+    }
+
+    variant buff-durability {
+        transient,
+        decrease-per-turn(u32),
+        permanent,
+    }
+
+    variant direction {
+        north,
+        north-west,
+        north-east,
+        south,
+        south-west,
+        south-east,
+        east,
+        west
+    }
+
+    record attack-params {
+        amount: s32,
+        range: u32,
+    }
+
+    record apply-buff-params {
+        range: u32,
+        name: string,
+        amount: s32,
+        durability: buff-durability,
+    }
+
+    record convert-params {
+        input: resources,
+        output-items: list<string>,
+        output-resources: list<tuple<string, u32>>,
+    }
+
+    record haul-params {
+        strength: u32,
+    }
+
+    variant micro-action {
+        walk,
+        haul(haul-params),
+        attack(attack-params),
+        apply-buff(apply-buff-params),
+        convert(convert-params),
+        equip,
+        unequip,
+        pick-up,
+        abandon-level,
+    }
+
+    record action {
+        name: string,
+        micro-actions: list<micro-action>,
+    }
+
+    variant action-target {
+        creature(s64),
+        actor,
+        equipment-slot(equipment-slot),
+        equipment-slot-and-item(tuple<equipment-slot, s64>),
+        direction(direction),
+        items(list<s64>),
+        location(loc),
+    }
+
+    variant command {
+        use-action(tuple<u32, option<action-target>>),
+        nothing,
+    }
+
+    record equipment-state {
+        left-hand: option<s64>,
+        right-hand: option<s64>,
+    }
+
+    record buff {
+        name: string,
+        amount: u32,
+        durability: buff-durability,
+    }
+
+    record game-state {
+        turn: s64,
+        level-id: s64,
+        level-is-stable: bool,
+    }
+
+    variant key {
+        up, down, left, right, space
+    }
+
+    record attack-description {
+        initiator: creature,
+        initiator-location: loc,
+        amount: s32,
+    }
+
+    type resources = list<tuple<string, u32>>;
+
+
+    record stats {
+        strength: u32,
+        hp: u32,
+        speed: u32,
+        inventory-size: u32,
+    }
+
+    record character-stats {
+        max: stats,
+        current: stats,
+    }
+
+    variant event {
+        moved(tuple<s32, s32>),
+        hauled(tuple<s32, s32>),
+        attacked(attack-description),
+        add-inventory-item(s64),
+        remove-inventory-item(s64),
+        equip-item(tuple<equipment-slot, s64>),
+        unequip-item(equipment-slot),
+        gain-resource(resources),
+        changed-level,
+    }
+
+}
+
+world auto-rogue-ai {
+    use types.{loc, tile, creature, item, inventory-item, equipment-state, character-stats, buff, game-state, action, event, command};
+    import tile-at: func(l: loc) -> option<tile>;
+    import visible-tiles: func() -> list<tuple<loc, tile>>;
+    import creature-at: func(l: loc) -> option<creature>;
+    import actor: func() -> tuple<loc, creature>;
+    import visible-creatures: func() -> list<tuple<loc, creature>>;
+    import item-at: func(l: loc) -> option<item>;
+    import visible-items: func() -> list<tuple<loc, item>>;
+    import inventory: func() -> list<inventory-item>;
+    import get-equipment-state: func() -> equipment-state;
+    import get-character-stats: func() -> character-stats;
+    import character-buffs: func() -> list<buff>;
+
+    import get-game-state: func() -> game-state;
+
+    import actions: func() -> list<action>;
+    import load-store: func() -> list<u8>;
+    import save-store: func(store: list<u8>);
+    import broadcast: func(data:option<list<u8>>);
+
+    import highlight-tiles: func(tiles: list<loc>);
+
+    import events: func() -> list<event>;
+
+    import config-data: func() -> option<list<u8>>;
+    export editor-config: func() -> option<list<u8>>;
+    import editor-debug: func(data: list<u8>);
+
+    export step: func() -> command;
+
+}

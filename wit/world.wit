@@ -85,6 +85,7 @@ interface types {
         equip,
         unequip,
         pick-up,
+        drop,
         abandon-level,
     }
 

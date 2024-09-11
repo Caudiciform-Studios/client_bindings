@@ -606,8 +606,9 @@ pub fn inventory() -> _rt::Vec<InventoryItem> {
                                     5 => V47::Equip,
                                     6 => V47::Unequip,
                                     7 => V47::PickUp,
+                                    8 => V47::Drop,
                                     n => {
-                                        debug_assert_eq!(n, 8, "invalid enum discriminant");
+                                        debug_assert_eq!(n, 9, "invalid enum discriminant");
                                         V47::AbandonLevel
                                     }
                                 };
@@ -1022,8 +1023,9 @@ pub fn actions() -> _rt::Vec<Action> {
                             5 => V40::Equip,
                             6 => V40::Unequip,
                             7 => V40::PickUp,
+                            8 => V40::Drop,
                             n => {
-                                debug_assert_eq!(n, 8, "invalid enum discriminant");
+                                debug_assert_eq!(n, 9, "invalid enum discriminant");
                                 V40::AbandonLevel
                             }
                         };
@@ -1943,6 +1945,7 @@ pub mod game {
                 Equip,
                 Unequip,
                 PickUp,
+                Drop,
                 AbandonLevel,
             }
             impl ::core::fmt::Debug for MicroAction {
@@ -1973,6 +1976,7 @@ pub mod game {
                         MicroAction::PickUp => {
                             f.debug_tuple("MicroAction::PickUp").finish()
                         }
+                        MicroAction::Drop => f.debug_tuple("MicroAction::Drop").finish(),
                         MicroAction::AbandonLevel => {
                             f.debug_tuple("MicroAction::AbandonLevel").finish()
                         }
@@ -2263,8 +2267,8 @@ macro_rules! __export_auto_rogue_ai_impl {
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.30.0:auto-rogue-ai:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2578] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x8e\x13\x01A\x02\x01\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2585] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x95\x13\x01A\x02\x01\
 AU\x01BA\x01r\x02\x01xz\x01yz\x04\0\x03loc\x03\0\0\x01r\x03\x08passable\x7f\x06o\
 paque\x7f\x04names\x04\0\x04tile\x03\0\x02\x01p}\x01k\x04\x01r\x04\x04names\x02i\
 dx\x07factiony\x09broadcast\x05\x04\0\x08creature\x03\0\x06\x01ks\x01r\x05\x02id\
@@ -2286,41 +2290,41 @@ nx\x08level-idx\x0flevel-is-stable\x7f\x04\0\x0agame-state\x03\0$\x01q\x05\x02up
 \0\0\x04down\0\0\x04left\0\0\x05right\0\0\x05space\0\0\x04\0\x03key\x03\0&\x01r\x03\
 \x09initiator\x07\x12initiator-location\x01\x06amountz\x04\0\x12attack-descripti\
 on\x03\0(\x01o\x02sy\x01p*\x04\0\x09resources\x03\0+\x01ps\x01p*\x01r\x03\x05inp\
-ut,\x0coutput-items-\x10output-resources.\x04\0\x0econvert-params\x03\0/\x01q\x09\
+ut,\x0coutput-items-\x10output-resources.\x04\0\x0econvert-params\x03\0/\x01q\x0a\
 \x04walk\0\0\x04haul\x01\x16\0\x06attack\x01\x12\0\x0aapply-buff\x01\x14\0\x07co\
-nvert\x010\0\x05equip\0\0\x07unequip\0\0\x07pick-up\0\0\x0dabandon-level\0\0\x04\
-\0\x0cmicro-action\x03\01\x01p2\x01r\x02\x04names\x0dmicro-actions3\x04\0\x06act\
-ion\x03\04\x01p5\x01k,\x01r\x05\x04names\x02idx\x05levely\x07actions6\x09resourc\
-es7\x04\0\x0einventory-item\x03\08\x01r\x04\x08strengthy\x02hpy\x05speedy\x0einv\
-entory-sizey\x04\0\x05stats\x03\0:\x01r\x02\x03max;\x07current;\x04\0\x0fcharact\
-er-stats\x03\0<\x01o\x02zz\x01q\x09\x05moved\x01>\0\x06hauled\x01>\0\x08attacked\
-\x01)\0\x12add-inventory-item\x01x\0\x15remove-inventory-item\x01x\0\x0aequip-it\
-em\x01\x17\0\x0cunequip-item\x01\x0c\0\x0dgain-resource\x01,\0\x0dchanged-level\0\
-\0\x04\0\x05event\x03\0?\x03\x01\x15game:auto-rogue/types\x05\0\x02\x03\0\0\x03l\
-oc\x03\0\x03loc\x03\0\x01\x02\x03\0\0\x04tile\x03\0\x04tile\x03\0\x03\x02\x03\0\0\
-\x08creature\x03\0\x08creature\x03\0\x05\x02\x03\0\0\x04item\x03\0\x04item\x03\0\
-\x07\x02\x03\0\0\x0einventory-item\x03\0\x0einventory-item\x03\0\x09\x02\x03\0\0\
-\x0fequipment-state\x03\0\x0fequipment-state\x03\0\x0b\x02\x03\0\0\x0fcharacter-\
-stats\x03\0\x0fcharacter-stats\x03\0\x0d\x02\x03\0\0\x04buff\x03\0\x04buff\x03\0\
-\x0f\x02\x03\0\0\x0agame-state\x03\0\x0agame-state\x03\0\x11\x02\x03\0\0\x06acti\
-on\x03\0\x06action\x03\0\x13\x02\x03\0\0\x05event\x03\0\x05event\x03\0\x15\x02\x03\
-\0\0\x07command\x03\0\x07command\x03\0\x17\x01k\x04\x01@\x01\x01l\x02\0\x19\x03\0\
-\x07tile-at\x01\x1a\x01o\x02\x02\x04\x01p\x1b\x01@\0\0\x1c\x03\0\x0dvisible-tile\
-s\x01\x1d\x01k\x06\x01@\x01\x01l\x02\0\x1e\x03\0\x0bcreature-at\x01\x1f\x01o\x02\
-\x02\x06\x01@\0\0\x20\x03\0\x05actor\x01!\x01p\x20\x01@\0\0\"\x03\0\x11visible-c\
-reatures\x01#\x01k\x08\x01@\x01\x01l\x02\0$\x03\0\x07item-at\x01%\x01o\x02\x02\x08\
-\x01p&\x01@\0\0'\x03\0\x0dvisible-items\x01(\x01p\x0a\x01@\0\0)\x03\0\x09invento\
-ry\x01*\x01@\0\0\x0c\x03\0\x13get-equipment-state\x01+\x01@\0\0\x0e\x03\0\x13get\
--character-stats\x01,\x01p\x10\x01@\0\0-\x03\0\x0fcharacter-buffs\x01.\x01@\0\0\x12\
-\x03\0\x0eget-game-state\x01/\x01p\x14\x01@\0\00\x03\0\x07actions\x011\x01p}\x01\
-@\0\02\x03\0\x0aload-store\x013\x01@\x01\x05store2\x01\0\x03\0\x0asave-store\x01\
-4\x01k2\x01@\x01\x04data5\x01\0\x03\0\x09broadcast\x016\x01p\x02\x01@\x01\x05til\
-es7\x01\0\x03\0\x0fhighlight-tiles\x018\x01p\x16\x01@\0\09\x03\0\x06events\x01:\x01\
-@\0\05\x03\0\x0bconfig-data\x01;\x01@\x01\x04data2\x01\0\x03\0\x0ceditor-debug\x01\
-<\x04\0\x0deditor-config\x01;\x01@\0\0\x18\x04\0\x04step\x01=\x04\x01\x1dgame:au\
-to-rogue/auto-rogue-ai\x04\0\x0b\x13\x01\0\x0dauto-rogue-ai\x03\0\0\0G\x09produc\
-ers\x01\x0cprocessed-by\x02\x0dwit-component\x070.215.0\x10wit-bindgen-rust\x060\
-.30.0";
+nvert\x010\0\x05equip\0\0\x07unequip\0\0\x07pick-up\0\0\x04drop\0\0\x0dabandon-l\
+evel\0\0\x04\0\x0cmicro-action\x03\01\x01p2\x01r\x02\x04names\x0dmicro-actions3\x04\
+\0\x06action\x03\04\x01p5\x01k,\x01r\x05\x04names\x02idx\x05levely\x07actions6\x09\
+resources7\x04\0\x0einventory-item\x03\08\x01r\x04\x08strengthy\x02hpy\x05speedy\
+\x0einventory-sizey\x04\0\x05stats\x03\0:\x01r\x02\x03max;\x07current;\x04\0\x0f\
+character-stats\x03\0<\x01o\x02zz\x01q\x09\x05moved\x01>\0\x06hauled\x01>\0\x08a\
+ttacked\x01)\0\x12add-inventory-item\x01x\0\x15remove-inventory-item\x01x\0\x0ae\
+quip-item\x01\x17\0\x0cunequip-item\x01\x0c\0\x0dgain-resource\x01,\0\x0dchanged\
+-level\0\0\x04\0\x05event\x03\0?\x03\x01\x15game:auto-rogue/types\x05\0\x02\x03\0\
+\0\x03loc\x03\0\x03loc\x03\0\x01\x02\x03\0\0\x04tile\x03\0\x04tile\x03\0\x03\x02\
+\x03\0\0\x08creature\x03\0\x08creature\x03\0\x05\x02\x03\0\0\x04item\x03\0\x04it\
+em\x03\0\x07\x02\x03\0\0\x0einventory-item\x03\0\x0einventory-item\x03\0\x09\x02\
+\x03\0\0\x0fequipment-state\x03\0\x0fequipment-state\x03\0\x0b\x02\x03\0\0\x0fch\
+aracter-stats\x03\0\x0fcharacter-stats\x03\0\x0d\x02\x03\0\0\x04buff\x03\0\x04bu\
+ff\x03\0\x0f\x02\x03\0\0\x0agame-state\x03\0\x0agame-state\x03\0\x11\x02\x03\0\0\
+\x06action\x03\0\x06action\x03\0\x13\x02\x03\0\0\x05event\x03\0\x05event\x03\0\x15\
+\x02\x03\0\0\x07command\x03\0\x07command\x03\0\x17\x01k\x04\x01@\x01\x01l\x02\0\x19\
+\x03\0\x07tile-at\x01\x1a\x01o\x02\x02\x04\x01p\x1b\x01@\0\0\x1c\x03\0\x0dvisibl\
+e-tiles\x01\x1d\x01k\x06\x01@\x01\x01l\x02\0\x1e\x03\0\x0bcreature-at\x01\x1f\x01\
+o\x02\x02\x06\x01@\0\0\x20\x03\0\x05actor\x01!\x01p\x20\x01@\0\0\"\x03\0\x11visi\
+ble-creatures\x01#\x01k\x08\x01@\x01\x01l\x02\0$\x03\0\x07item-at\x01%\x01o\x02\x02\
+\x08\x01p&\x01@\0\0'\x03\0\x0dvisible-items\x01(\x01p\x0a\x01@\0\0)\x03\0\x09inv\
+entory\x01*\x01@\0\0\x0c\x03\0\x13get-equipment-state\x01+\x01@\0\0\x0e\x03\0\x13\
+get-character-stats\x01,\x01p\x10\x01@\0\0-\x03\0\x0fcharacter-buffs\x01.\x01@\0\
+\0\x12\x03\0\x0eget-game-state\x01/\x01p\x14\x01@\0\00\x03\0\x07actions\x011\x01\
+p}\x01@\0\02\x03\0\x0aload-store\x013\x01@\x01\x05store2\x01\0\x03\0\x0asave-sto\
+re\x014\x01k2\x01@\x01\x04data5\x01\0\x03\0\x09broadcast\x016\x01p\x02\x01@\x01\x05\
+tiles7\x01\0\x03\0\x0fhighlight-tiles\x018\x01p\x16\x01@\0\09\x03\0\x06events\x01\
+:\x01@\0\05\x03\0\x0bconfig-data\x01;\x01@\x01\x04data2\x01\0\x03\0\x0ceditor-de\
+bug\x01<\x04\0\x0deditor-config\x01;\x01@\0\0\x18\x04\0\x04step\x01=\x04\x01\x1d\
+game:auto-rogue/auto-rogue-ai\x04\0\x0b\x13\x01\0\x0dauto-rogue-ai\x03\0\0\0G\x09\
+producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.215.0\x10wit-bindgen-rus\
+t\x060.30.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

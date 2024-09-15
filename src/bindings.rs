@@ -108,8 +108,8 @@ pub fn visible_tiles() -> _rt::Vec<(Loc, Tile)> {
 pub fn creature_at(l: Loc) -> Option<Creature> {
     unsafe {
         #[repr(align(8))]
-        struct RetArea([::core::mem::MaybeUninit<u8>; 40]);
-        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 40]);
+        struct RetArea([::core::mem::MaybeUninit<u8>; 48]);
+        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 48]);
         let game::auto_rogue::types::Loc { x: x0, y: y0 } = l;
         let ptr1 = ret_area.0.as_mut_ptr().cast::<u8>();
         #[cfg(target_arch = "wasm32")]
@@ -134,19 +134,62 @@ pub fn creature_at(l: Loc) -> Option<Creature> {
                     let bytes5 = _rt::Vec::from_raw_parts(l3.cast(), len5, len5);
                     let l6 = *ptr1.add(16).cast::<i64>();
                     let l7 = *ptr1.add(24).cast::<i32>();
-                    let l8 = i32::from(*ptr1.add(28).cast::<u8>());
+                    let l8 = *ptr1.add(28).cast::<*mut u8>();
+                    let l9 = *ptr1.add(32).cast::<usize>();
+                    let base17 = l8;
+                    let len17 = l9;
+                    let mut result17 = _rt::Vec::with_capacity(len17);
+                    for i in 0..len17 {
+                        let base = base17.add(i * 20);
+                        let e17 = {
+                            let l10 = *base.add(0).cast::<*mut u8>();
+                            let l11 = *base.add(4).cast::<usize>();
+                            let len12 = l11;
+                            let bytes12 = _rt::Vec::from_raw_parts(
+                                l10.cast(),
+                                len12,
+                                len12,
+                            );
+                            let l13 = *base.add(8).cast::<i32>();
+                            let l14 = i32::from(*base.add(12).cast::<u8>());
+                            use game::auto_rogue::types::BuffDurability as V16;
+                            let v16 = match l14 {
+                                0 => V16::Transient,
+                                1 => {
+                                    let e16 = {
+                                        let l15 = *base.add(16).cast::<i32>();
+                                        l15 as u32
+                                    };
+                                    V16::DecreasePerTurn(e16)
+                                }
+                                n => {
+                                    debug_assert_eq!(n, 2, "invalid enum discriminant");
+                                    V16::Permanent
+                                }
+                            };
+                            game::auto_rogue::types::Buff {
+                                name: _rt::string_lift(bytes12),
+                                amount: l13 as u32,
+                                durability: v16,
+                            }
+                        };
+                        result17.push(e17);
+                    }
+                    _rt::cabi_dealloc(base17, len17 * 20, 4);
+                    let l18 = i32::from(*ptr1.add(36).cast::<u8>());
                     game::auto_rogue::types::Creature {
                         name: _rt::string_lift(bytes5),
                         id: l6,
                         faction: l7 as u32,
-                        broadcast: match l8 {
+                        buffs: result17,
+                        broadcast: match l18 {
                             0 => None,
                             1 => {
                                 let e = {
-                                    let l9 = *ptr1.add(32).cast::<*mut u8>();
-                                    let l10 = *ptr1.add(36).cast::<usize>();
-                                    let len11 = l10;
-                                    _rt::Vec::from_raw_parts(l9.cast(), len11, len11)
+                                    let l19 = *ptr1.add(40).cast::<*mut u8>();
+                                    let l20 = *ptr1.add(44).cast::<usize>();
+                                    let len21 = l20;
+                                    _rt::Vec::from_raw_parts(l19.cast(), len21, len21)
                                 };
                                 Some(e)
                             }
@@ -164,8 +207,8 @@ pub fn creature_at(l: Loc) -> Option<Creature> {
 pub fn actor() -> (Loc, Creature) {
     unsafe {
         #[repr(align(8))]
-        struct RetArea([::core::mem::MaybeUninit<u8>; 40]);
-        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 40]);
+        struct RetArea([::core::mem::MaybeUninit<u8>; 48]);
+        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 48]);
         let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
         #[cfg(target_arch = "wasm32")]
         #[link(wasm_import_module = "$root")]
@@ -186,7 +229,45 @@ pub fn actor() -> (Loc, Creature) {
         let bytes5 = _rt::Vec::from_raw_parts(l3.cast(), len5, len5);
         let l6 = *ptr0.add(16).cast::<i64>();
         let l7 = *ptr0.add(24).cast::<i32>();
-        let l8 = i32::from(*ptr0.add(28).cast::<u8>());
+        let l8 = *ptr0.add(28).cast::<*mut u8>();
+        let l9 = *ptr0.add(32).cast::<usize>();
+        let base17 = l8;
+        let len17 = l9;
+        let mut result17 = _rt::Vec::with_capacity(len17);
+        for i in 0..len17 {
+            let base = base17.add(i * 20);
+            let e17 = {
+                let l10 = *base.add(0).cast::<*mut u8>();
+                let l11 = *base.add(4).cast::<usize>();
+                let len12 = l11;
+                let bytes12 = _rt::Vec::from_raw_parts(l10.cast(), len12, len12);
+                let l13 = *base.add(8).cast::<i32>();
+                let l14 = i32::from(*base.add(12).cast::<u8>());
+                use game::auto_rogue::types::BuffDurability as V16;
+                let v16 = match l14 {
+                    0 => V16::Transient,
+                    1 => {
+                        let e16 = {
+                            let l15 = *base.add(16).cast::<i32>();
+                            l15 as u32
+                        };
+                        V16::DecreasePerTurn(e16)
+                    }
+                    n => {
+                        debug_assert_eq!(n, 2, "invalid enum discriminant");
+                        V16::Permanent
+                    }
+                };
+                game::auto_rogue::types::Buff {
+                    name: _rt::string_lift(bytes12),
+                    amount: l13 as u32,
+                    durability: v16,
+                }
+            };
+            result17.push(e17);
+        }
+        _rt::cabi_dealloc(base17, len17 * 20, 4);
+        let l18 = i32::from(*ptr0.add(36).cast::<u8>());
         (
             game::auto_rogue::types::Loc {
                 x: l1,
@@ -196,14 +277,15 @@ pub fn actor() -> (Loc, Creature) {
                 name: _rt::string_lift(bytes5),
                 id: l6,
                 faction: l7 as u32,
-                broadcast: match l8 {
+                buffs: result17,
+                broadcast: match l18 {
                     0 => None,
                     1 => {
                         let e = {
-                            let l9 = *ptr0.add(32).cast::<*mut u8>();
-                            let l10 = *ptr0.add(36).cast::<usize>();
-                            let len11 = l10;
-                            _rt::Vec::from_raw_parts(l9.cast(), len11, len11)
+                            let l19 = *ptr0.add(40).cast::<*mut u8>();
+                            let l20 = *ptr0.add(44).cast::<usize>();
+                            let len21 = l20;
+                            _rt::Vec::from_raw_parts(l19.cast(), len21, len21)
                         };
                         Some(e)
                     }
@@ -233,12 +315,12 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
         wit_import(ptr0);
         let l1 = *ptr0.add(0).cast::<*mut u8>();
         let l2 = *ptr0.add(4).cast::<usize>();
-        let base14 = l1;
-        let len14 = l2;
-        let mut result14 = _rt::Vec::with_capacity(len14);
-        for i in 0..len14 {
-            let base = base14.add(i * 40);
-            let e14 = {
+        let base24 = l1;
+        let len24 = l2;
+        let mut result24 = _rt::Vec::with_capacity(len24);
+        for i in 0..len24 {
+            let base = base24.add(i * 48);
+            let e24 = {
                 let l3 = *base.add(0).cast::<i32>();
                 let l4 = *base.add(4).cast::<i32>();
                 let l5 = *base.add(8).cast::<*mut u8>();
@@ -247,7 +329,45 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
                 let bytes7 = _rt::Vec::from_raw_parts(l5.cast(), len7, len7);
                 let l8 = *base.add(16).cast::<i64>();
                 let l9 = *base.add(24).cast::<i32>();
-                let l10 = i32::from(*base.add(28).cast::<u8>());
+                let l10 = *base.add(28).cast::<*mut u8>();
+                let l11 = *base.add(32).cast::<usize>();
+                let base19 = l10;
+                let len19 = l11;
+                let mut result19 = _rt::Vec::with_capacity(len19);
+                for i in 0..len19 {
+                    let base = base19.add(i * 20);
+                    let e19 = {
+                        let l12 = *base.add(0).cast::<*mut u8>();
+                        let l13 = *base.add(4).cast::<usize>();
+                        let len14 = l13;
+                        let bytes14 = _rt::Vec::from_raw_parts(l12.cast(), len14, len14);
+                        let l15 = *base.add(8).cast::<i32>();
+                        let l16 = i32::from(*base.add(12).cast::<u8>());
+                        use game::auto_rogue::types::BuffDurability as V18;
+                        let v18 = match l16 {
+                            0 => V18::Transient,
+                            1 => {
+                                let e18 = {
+                                    let l17 = *base.add(16).cast::<i32>();
+                                    l17 as u32
+                                };
+                                V18::DecreasePerTurn(e18)
+                            }
+                            n => {
+                                debug_assert_eq!(n, 2, "invalid enum discriminant");
+                                V18::Permanent
+                            }
+                        };
+                        game::auto_rogue::types::Buff {
+                            name: _rt::string_lift(bytes14),
+                            amount: l15 as u32,
+                            durability: v18,
+                        }
+                    };
+                    result19.push(e19);
+                }
+                _rt::cabi_dealloc(base19, len19 * 20, 4);
+                let l20 = i32::from(*base.add(36).cast::<u8>());
                 (
                     game::auto_rogue::types::Loc {
                         x: l3,
@@ -257,14 +377,15 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
                         name: _rt::string_lift(bytes7),
                         id: l8,
                         faction: l9 as u32,
-                        broadcast: match l10 {
+                        buffs: result19,
+                        broadcast: match l20 {
                             0 => None,
                             1 => {
                                 let e = {
-                                    let l11 = *base.add(32).cast::<*mut u8>();
-                                    let l12 = *base.add(36).cast::<usize>();
-                                    let len13 = l12;
-                                    _rt::Vec::from_raw_parts(l11.cast(), len13, len13)
+                                    let l21 = *base.add(40).cast::<*mut u8>();
+                                    let l22 = *base.add(44).cast::<usize>();
+                                    let len23 = l22;
+                                    _rt::Vec::from_raw_parts(l21.cast(), len23, len23)
                                 };
                                 Some(e)
                             }
@@ -273,10 +394,10 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
                     },
                 )
             };
-            result14.push(e14);
+            result24.push(e24);
         }
-        _rt::cabi_dealloc(base14, len14 * 40, 8);
-        result14
+        _rt::cabi_dealloc(base24, len24 * 48, 8);
+        result24
     }
 }
 #[allow(unused_unsafe, clippy::all)]
@@ -1133,6 +1254,29 @@ pub fn highlight_tiles(tiles: &[Loc]) {
     }
 }
 #[allow(unused_unsafe, clippy::all)]
+pub fn highlight_actor(color: Option<(f32, f32, f32)>) {
+    unsafe {
+        let (result1_0, result1_1, result1_2, result1_3) = match color {
+            Some(e) => {
+                let (t0_0, t0_1, t0_2) = e;
+                (1i32, _rt::as_f32(t0_0), _rt::as_f32(t0_1), _rt::as_f32(t0_2))
+            }
+            None => (0i32, 0.0f32, 0.0f32, 0.0f32),
+        };
+        #[cfg(target_arch = "wasm32")]
+        #[link(wasm_import_module = "$root")]
+        extern "C" {
+            #[link_name = "highlight-actor"]
+            fn wit_import(_: i32, _: f32, _: f32, _: f32);
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        fn wit_import(_: i32, _: f32, _: f32, _: f32) {
+            unreachable!()
+        }
+        wit_import(result1_0, result1_1, result1_2, result1_3);
+    }
+}
+#[allow(unused_unsafe, clippy::all)]
 pub fn events() -> _rt::Vec<Event> {
     unsafe {
         #[repr(align(4))]
@@ -1152,33 +1296,33 @@ pub fn events() -> _rt::Vec<Event> {
         wit_import(ptr0);
         let l1 = *ptr0.add(0).cast::<*mut u8>();
         let l2 = *ptr0.add(4).cast::<usize>();
-        let base35 = l1;
-        let len35 = l2;
-        let mut result35 = _rt::Vec::with_capacity(len35);
-        for i in 0..len35 {
-            let base = base35.add(i * 56);
-            let e35 = {
+        let base45 = l1;
+        let len45 = l2;
+        let mut result45 = _rt::Vec::with_capacity(len45);
+        for i in 0..len45 {
+            let base = base45.add(i * 64);
+            let e45 = {
                 let l3 = i32::from(*base.add(0).cast::<u8>());
-                use game::auto_rogue::types::Event as V34;
-                let v34 = match l3 {
+                use game::auto_rogue::types::Event as V44;
+                let v44 = match l3 {
                     0 => {
-                        let e34 = {
+                        let e44 = {
                             let l4 = *base.add(8).cast::<i32>();
                             let l5 = *base.add(12).cast::<i32>();
                             (l4, l5)
                         };
-                        V34::Moved(e34)
+                        V44::Moved(e44)
                     }
                     1 => {
-                        let e34 = {
+                        let e44 = {
                             let l6 = *base.add(8).cast::<i32>();
                             let l7 = *base.add(12).cast::<i32>();
                             (l6, l7)
                         };
-                        V34::Hauled(e34)
+                        V44::Hauled(e44)
                     }
                     2 => {
-                        let e34 = {
+                        let e44 = {
                             let l8 = *base.add(8).cast::<*mut u8>();
                             let l9 = *base.add(12).cast::<usize>();
                             let len10 = l9;
@@ -1189,23 +1333,66 @@ pub fn events() -> _rt::Vec<Event> {
                             );
                             let l11 = *base.add(16).cast::<i64>();
                             let l12 = *base.add(24).cast::<i32>();
-                            let l13 = i32::from(*base.add(28).cast::<u8>());
-                            let l17 = *base.add(40).cast::<i32>();
-                            let l18 = *base.add(44).cast::<i32>();
-                            let l19 = *base.add(48).cast::<i32>();
+                            let l13 = *base.add(28).cast::<*mut u8>();
+                            let l14 = *base.add(32).cast::<usize>();
+                            let base22 = l13;
+                            let len22 = l14;
+                            let mut result22 = _rt::Vec::with_capacity(len22);
+                            for i in 0..len22 {
+                                let base = base22.add(i * 20);
+                                let e22 = {
+                                    let l15 = *base.add(0).cast::<*mut u8>();
+                                    let l16 = *base.add(4).cast::<usize>();
+                                    let len17 = l16;
+                                    let bytes17 = _rt::Vec::from_raw_parts(
+                                        l15.cast(),
+                                        len17,
+                                        len17,
+                                    );
+                                    let l18 = *base.add(8).cast::<i32>();
+                                    let l19 = i32::from(*base.add(12).cast::<u8>());
+                                    use game::auto_rogue::types::BuffDurability as V21;
+                                    let v21 = match l19 {
+                                        0 => V21::Transient,
+                                        1 => {
+                                            let e21 = {
+                                                let l20 = *base.add(16).cast::<i32>();
+                                                l20 as u32
+                                            };
+                                            V21::DecreasePerTurn(e21)
+                                        }
+                                        n => {
+                                            debug_assert_eq!(n, 2, "invalid enum discriminant");
+                                            V21::Permanent
+                                        }
+                                    };
+                                    game::auto_rogue::types::Buff {
+                                        name: _rt::string_lift(bytes17),
+                                        amount: l18 as u32,
+                                        durability: v21,
+                                    }
+                                };
+                                result22.push(e22);
+                            }
+                            _rt::cabi_dealloc(base22, len22 * 20, 4);
+                            let l23 = i32::from(*base.add(36).cast::<u8>());
+                            let l27 = *base.add(48).cast::<i32>();
+                            let l28 = *base.add(52).cast::<i32>();
+                            let l29 = *base.add(56).cast::<i32>();
                             game::auto_rogue::types::AttackDescription {
                                 initiator: game::auto_rogue::types::Creature {
                                     name: _rt::string_lift(bytes10),
                                     id: l11,
                                     faction: l12 as u32,
-                                    broadcast: match l13 {
+                                    buffs: result22,
+                                    broadcast: match l23 {
                                         0 => None,
                                         1 => {
                                             let e = {
-                                                let l14 = *base.add(32).cast::<*mut u8>();
-                                                let l15 = *base.add(36).cast::<usize>();
-                                                let len16 = l15;
-                                                _rt::Vec::from_raw_parts(l14.cast(), len16, len16)
+                                                let l24 = *base.add(40).cast::<*mut u8>();
+                                                let l25 = *base.add(44).cast::<usize>();
+                                                let len26 = l25;
+                                                _rt::Vec::from_raw_parts(l24.cast(), len26, len26)
                                             };
                                             Some(e)
                                         }
@@ -1213,98 +1400,98 @@ pub fn events() -> _rt::Vec<Event> {
                                     },
                                 },
                                 initiator_location: game::auto_rogue::types::Loc {
-                                    x: l17,
-                                    y: l18,
+                                    x: l27,
+                                    y: l28,
                                 },
-                                amount: l19,
+                                amount: l29,
                             }
                         };
-                        V34::Attacked(e34)
+                        V44::Attacked(e44)
                     }
                     3 => {
-                        let e34 = {
-                            let l20 = *base.add(8).cast::<i64>();
-                            l20
+                        let e44 = {
+                            let l30 = *base.add(8).cast::<i64>();
+                            l30
                         };
-                        V34::AddInventoryItem(e34)
+                        V44::AddInventoryItem(e44)
                     }
                     4 => {
-                        let e34 = {
-                            let l21 = *base.add(8).cast::<i64>();
-                            l21
+                        let e44 = {
+                            let l31 = *base.add(8).cast::<i64>();
+                            l31
                         };
-                        V34::RemoveInventoryItem(e34)
+                        V44::RemoveInventoryItem(e44)
                     }
                     5 => {
-                        let e34 = {
-                            let l22 = i32::from(*base.add(8).cast::<u8>());
-                            use game::auto_rogue::types::EquipmentSlot as V23;
-                            let v23 = match l22 {
-                                0 => V23::LeftHand,
+                        let e44 = {
+                            let l32 = i32::from(*base.add(8).cast::<u8>());
+                            use game::auto_rogue::types::EquipmentSlot as V33;
+                            let v33 = match l32 {
+                                0 => V33::LeftHand,
                                 n => {
                                     debug_assert_eq!(n, 1, "invalid enum discriminant");
-                                    V23::RightHand
+                                    V33::RightHand
                                 }
                             };
-                            let l24 = *base.add(16).cast::<i64>();
-                            (v23, l24)
+                            let l34 = *base.add(16).cast::<i64>();
+                            (v33, l34)
                         };
-                        V34::EquipItem(e34)
+                        V44::EquipItem(e44)
                     }
                     6 => {
-                        let e34 = {
-                            let l25 = i32::from(*base.add(8).cast::<u8>());
-                            use game::auto_rogue::types::EquipmentSlot as V26;
-                            let v26 = match l25 {
-                                0 => V26::LeftHand,
+                        let e44 = {
+                            let l35 = i32::from(*base.add(8).cast::<u8>());
+                            use game::auto_rogue::types::EquipmentSlot as V36;
+                            let v36 = match l35 {
+                                0 => V36::LeftHand,
                                 n => {
                                     debug_assert_eq!(n, 1, "invalid enum discriminant");
-                                    V26::RightHand
+                                    V36::RightHand
                                 }
                             };
-                            v26
+                            v36
                         };
-                        V34::UnequipItem(e34)
+                        V44::UnequipItem(e44)
                     }
                     7 => {
-                        let e34 = {
-                            let l27 = *base.add(8).cast::<*mut u8>();
-                            let l28 = *base.add(12).cast::<usize>();
-                            let base33 = l27;
-                            let len33 = l28;
-                            let mut result33 = _rt::Vec::with_capacity(len33);
-                            for i in 0..len33 {
-                                let base = base33.add(i * 12);
-                                let e33 = {
-                                    let l29 = *base.add(0).cast::<*mut u8>();
-                                    let l30 = *base.add(4).cast::<usize>();
-                                    let len31 = l30;
-                                    let bytes31 = _rt::Vec::from_raw_parts(
-                                        l29.cast(),
-                                        len31,
-                                        len31,
+                        let e44 = {
+                            let l37 = *base.add(8).cast::<*mut u8>();
+                            let l38 = *base.add(12).cast::<usize>();
+                            let base43 = l37;
+                            let len43 = l38;
+                            let mut result43 = _rt::Vec::with_capacity(len43);
+                            for i in 0..len43 {
+                                let base = base43.add(i * 12);
+                                let e43 = {
+                                    let l39 = *base.add(0).cast::<*mut u8>();
+                                    let l40 = *base.add(4).cast::<usize>();
+                                    let len41 = l40;
+                                    let bytes41 = _rt::Vec::from_raw_parts(
+                                        l39.cast(),
+                                        len41,
+                                        len41,
                                     );
-                                    let l32 = *base.add(8).cast::<i32>();
-                                    (_rt::string_lift(bytes31), l32 as u32)
+                                    let l42 = *base.add(8).cast::<i32>();
+                                    (_rt::string_lift(bytes41), l42 as u32)
                                 };
-                                result33.push(e33);
+                                result43.push(e43);
                             }
-                            _rt::cabi_dealloc(base33, len33 * 12, 4);
-                            result33
+                            _rt::cabi_dealloc(base43, len43 * 12, 4);
+                            result43
                         };
-                        V34::GainResource(e34)
+                        V44::GainResource(e44)
                     }
                     n => {
                         debug_assert_eq!(n, 8, "invalid enum discriminant");
-                        V34::ChangedLevel
+                        V44::ChangedLevel
                     }
                 };
-                v34
+                v44
             };
-            result35.push(e35);
+            result45.push(e45);
         }
-        _rt::cabi_dealloc(base35, len35 * 56, 8);
-        result35
+        _rt::cabi_dealloc(base45, len45 * 64, 8);
+        result45
     }
 }
 #[allow(unused_unsafe, clippy::all)]
@@ -1607,26 +1794,6 @@ pub mod game {
                 }
             }
             #[derive(Clone)]
-            pub struct Creature {
-                pub name: _rt::String,
-                pub id: i64,
-                pub faction: u32,
-                pub broadcast: Option<_rt::Vec<u8>>,
-            }
-            impl ::core::fmt::Debug for Creature {
-                fn fmt(
-                    &self,
-                    f: &mut ::core::fmt::Formatter<'_>,
-                ) -> ::core::fmt::Result {
-                    f.debug_struct("Creature")
-                        .field("name", &self.name)
-                        .field("id", &self.id)
-                        .field("faction", &self.faction)
-                        .field("broadcast", &self.broadcast)
-                        .finish()
-                }
-            }
-            #[derive(Clone)]
             pub struct Item {
                 pub id: i64,
                 pub name: _rt::String,
@@ -1876,6 +2043,28 @@ pub mod game {
                         .field("name", &self.name)
                         .field("amount", &self.amount)
                         .field("durability", &self.durability)
+                        .finish()
+                }
+            }
+            #[derive(Clone)]
+            pub struct Creature {
+                pub name: _rt::String,
+                pub id: i64,
+                pub faction: u32,
+                pub buffs: _rt::Vec<Buff>,
+                pub broadcast: Option<_rt::Vec<u8>>,
+            }
+            impl ::core::fmt::Debug for Creature {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    f.debug_struct("Creature")
+                        .field("name", &self.name)
+                        .field("id", &self.id)
+                        .field("faction", &self.faction)
+                        .field("buffs", &self.buffs)
+                        .field("broadcast", &self.broadcast)
                         .finish()
                 }
             }
@@ -2204,6 +2393,23 @@ mod _rt {
         let layout = alloc::Layout::from_size_align_unchecked(size, align);
         alloc::dealloc(ptr, layout);
     }
+    pub fn as_f32<T: AsF32>(t: T) -> f32 {
+        t.as_f32()
+    }
+    pub trait AsF32 {
+        fn as_f32(self) -> f32;
+    }
+    impl<'a, T: Copy + AsF32> AsF32 for &'a T {
+        fn as_f32(self) -> f32 {
+            (*self).as_f32()
+        }
+    }
+    impl AsF32 for f32 {
+        #[inline]
+        fn as_f32(self) -> f32 {
+            self as f32
+        }
+    }
     #[cfg(target_arch = "wasm32")]
     pub fn run_ctors_once() {
         wit_bindgen_rt::run_ctors_once();
@@ -2267,64 +2473,65 @@ macro_rules! __export_auto_rogue_ai_impl {
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.30.0:auto-rogue-ai:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2585] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x95\x13\x01A\x02\x01\
-AU\x01BA\x01r\x02\x01xz\x01yz\x04\0\x03loc\x03\0\0\x01r\x03\x08passable\x7f\x06o\
-paque\x7f\x04names\x04\0\x04tile\x03\0\x02\x01p}\x01k\x04\x01r\x04\x04names\x02i\
-dx\x07factiony\x09broadcast\x05\x04\0\x08creature\x03\0\x06\x01ks\x01r\x05\x02id\
-x\x04names\x0cis-furniture\x7f\x0bis-passable\x7f\x08metadata\x08\x04\0\x04item\x03\
-\0\x09\x01q\x02\x09left-hand\0\0\x0aright-hand\0\0\x04\0\x0eequipment-slot\x03\0\
-\x0b\x01q\x03\x09transient\0\0\x11decrease-per-turn\x01y\0\x09permanent\0\0\x04\0\
-\x0fbuff-durability\x03\0\x0d\x01q\x08\x05north\0\0\x0anorth-west\0\0\x0anorth-e\
-ast\0\0\x05south\0\0\x0asouth-west\0\0\x0asouth-east\0\0\x04east\0\0\x04west\0\0\
-\x04\0\x09direction\x03\0\x0f\x01r\x02\x06amountz\x05rangey\x04\0\x0dattack-para\
-ms\x03\0\x11\x01r\x04\x05rangey\x04names\x06amountz\x0adurability\x0e\x04\0\x11a\
-pply-buff-params\x03\0\x13\x01r\x01\x08strengthy\x04\0\x0bhaul-params\x03\0\x15\x01\
-o\x02\x0cx\x01px\x01q\x07\x08creature\x01x\0\x05actor\0\0\x0eequipment-slot\x01\x0c\
-\0\x17equipment-slot-and-item\x01\x17\0\x09direction\x01\x10\0\x05items\x01\x18\0\
-\x08location\x01\x01\0\x04\0\x0daction-target\x03\0\x19\x01k\x1a\x01o\x02y\x1b\x01\
-q\x02\x0ause-action\x01\x1c\0\x07nothing\0\0\x04\0\x07command\x03\0\x1d\x01kx\x01\
-r\x02\x09left-hand\x1f\x0aright-hand\x1f\x04\0\x0fequipment-state\x03\0\x20\x01r\
-\x03\x04names\x06amounty\x0adurability\x0e\x04\0\x04buff\x03\0\"\x01r\x03\x04tur\
-nx\x08level-idx\x0flevel-is-stable\x7f\x04\0\x0agame-state\x03\0$\x01q\x05\x02up\
-\0\0\x04down\0\0\x04left\0\0\x05right\0\0\x05space\0\0\x04\0\x03key\x03\0&\x01r\x03\
-\x09initiator\x07\x12initiator-location\x01\x06amountz\x04\0\x12attack-descripti\
-on\x03\0(\x01o\x02sy\x01p*\x04\0\x09resources\x03\0+\x01ps\x01p*\x01r\x03\x05inp\
-ut,\x0coutput-items-\x10output-resources.\x04\0\x0econvert-params\x03\0/\x01q\x0a\
-\x04walk\0\0\x04haul\x01\x16\0\x06attack\x01\x12\0\x0aapply-buff\x01\x14\0\x07co\
-nvert\x010\0\x05equip\0\0\x07unequip\0\0\x07pick-up\0\0\x04drop\0\0\x0dabandon-l\
-evel\0\0\x04\0\x0cmicro-action\x03\01\x01p2\x01r\x02\x04names\x0dmicro-actions3\x04\
-\0\x06action\x03\04\x01p5\x01k,\x01r\x05\x04names\x02idx\x05levely\x07actions6\x09\
-resources7\x04\0\x0einventory-item\x03\08\x01r\x04\x08strengthy\x02hpy\x05speedy\
-\x0einventory-sizey\x04\0\x05stats\x03\0:\x01r\x02\x03max;\x07current;\x04\0\x0f\
-character-stats\x03\0<\x01o\x02zz\x01q\x09\x05moved\x01>\0\x06hauled\x01>\0\x08a\
-ttacked\x01)\0\x12add-inventory-item\x01x\0\x15remove-inventory-item\x01x\0\x0ae\
-quip-item\x01\x17\0\x0cunequip-item\x01\x0c\0\x0dgain-resource\x01,\0\x0dchanged\
--level\0\0\x04\0\x05event\x03\0?\x03\x01\x15game:auto-rogue/types\x05\0\x02\x03\0\
-\0\x03loc\x03\0\x03loc\x03\0\x01\x02\x03\0\0\x04tile\x03\0\x04tile\x03\0\x03\x02\
-\x03\0\0\x08creature\x03\0\x08creature\x03\0\x05\x02\x03\0\0\x04item\x03\0\x04it\
-em\x03\0\x07\x02\x03\0\0\x0einventory-item\x03\0\x0einventory-item\x03\0\x09\x02\
-\x03\0\0\x0fequipment-state\x03\0\x0fequipment-state\x03\0\x0b\x02\x03\0\0\x0fch\
-aracter-stats\x03\0\x0fcharacter-stats\x03\0\x0d\x02\x03\0\0\x04buff\x03\0\x04bu\
-ff\x03\0\x0f\x02\x03\0\0\x0agame-state\x03\0\x0agame-state\x03\0\x11\x02\x03\0\0\
-\x06action\x03\0\x06action\x03\0\x13\x02\x03\0\0\x05event\x03\0\x05event\x03\0\x15\
-\x02\x03\0\0\x07command\x03\0\x07command\x03\0\x17\x01k\x04\x01@\x01\x01l\x02\0\x19\
-\x03\0\x07tile-at\x01\x1a\x01o\x02\x02\x04\x01p\x1b\x01@\0\0\x1c\x03\0\x0dvisibl\
-e-tiles\x01\x1d\x01k\x06\x01@\x01\x01l\x02\0\x1e\x03\0\x0bcreature-at\x01\x1f\x01\
-o\x02\x02\x06\x01@\0\0\x20\x03\0\x05actor\x01!\x01p\x20\x01@\0\0\"\x03\0\x11visi\
-ble-creatures\x01#\x01k\x08\x01@\x01\x01l\x02\0$\x03\0\x07item-at\x01%\x01o\x02\x02\
-\x08\x01p&\x01@\0\0'\x03\0\x0dvisible-items\x01(\x01p\x0a\x01@\0\0)\x03\0\x09inv\
-entory\x01*\x01@\0\0\x0c\x03\0\x13get-equipment-state\x01+\x01@\0\0\x0e\x03\0\x13\
-get-character-stats\x01,\x01p\x10\x01@\0\0-\x03\0\x0fcharacter-buffs\x01.\x01@\0\
-\0\x12\x03\0\x0eget-game-state\x01/\x01p\x14\x01@\0\00\x03\0\x07actions\x011\x01\
-p}\x01@\0\02\x03\0\x0aload-store\x013\x01@\x01\x05store2\x01\0\x03\0\x0asave-sto\
-re\x014\x01k2\x01@\x01\x04data5\x01\0\x03\0\x09broadcast\x016\x01p\x02\x01@\x01\x05\
-tiles7\x01\0\x03\0\x0fhighlight-tiles\x018\x01p\x16\x01@\0\09\x03\0\x06events\x01\
-:\x01@\0\05\x03\0\x0bconfig-data\x01;\x01@\x01\x04data2\x01\0\x03\0\x0ceditor-de\
-bug\x01<\x04\0\x0deditor-config\x01;\x01@\0\0\x18\x04\0\x04step\x01=\x04\x01\x1d\
-game:auto-rogue/auto-rogue-ai\x04\0\x0b\x13\x01\0\x0dauto-rogue-ai\x03\0\0\0G\x09\
-producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.215.0\x10wit-bindgen-rus\
-t\x060.30.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2636] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xc8\x13\x01A\x02\x01\
+AY\x01BB\x01r\x02\x01xz\x01yz\x04\0\x03loc\x03\0\0\x01r\x03\x08passable\x7f\x06o\
+paque\x7f\x04names\x04\0\x04tile\x03\0\x02\x01ks\x01r\x05\x02idx\x04names\x0cis-\
+furniture\x7f\x0bis-passable\x7f\x08metadata\x04\x04\0\x04item\x03\0\x05\x01q\x02\
+\x09left-hand\0\0\x0aright-hand\0\0\x04\0\x0eequipment-slot\x03\0\x07\x01q\x03\x09\
+transient\0\0\x11decrease-per-turn\x01y\0\x09permanent\0\0\x04\0\x0fbuff-durabil\
+ity\x03\0\x09\x01q\x08\x05north\0\0\x0anorth-west\0\0\x0anorth-east\0\0\x05south\
+\0\0\x0asouth-west\0\0\x0asouth-east\0\0\x04east\0\0\x04west\0\0\x04\0\x09direct\
+ion\x03\0\x0b\x01r\x02\x06amountz\x05rangey\x04\0\x0dattack-params\x03\0\x0d\x01\
+r\x04\x05rangey\x04names\x06amountz\x0adurability\x0a\x04\0\x11apply-buff-params\
+\x03\0\x0f\x01r\x01\x08strengthy\x04\0\x0bhaul-params\x03\0\x11\x01o\x02\x08x\x01\
+px\x01q\x07\x08creature\x01x\0\x05actor\0\0\x0eequipment-slot\x01\x08\0\x17equip\
+ment-slot-and-item\x01\x13\0\x09direction\x01\x0c\0\x05items\x01\x14\0\x08locati\
+on\x01\x01\0\x04\0\x0daction-target\x03\0\x15\x01k\x16\x01o\x02y\x17\x01q\x02\x0a\
+use-action\x01\x18\0\x07nothing\0\0\x04\0\x07command\x03\0\x19\x01kx\x01r\x02\x09\
+left-hand\x1b\x0aright-hand\x1b\x04\0\x0fequipment-state\x03\0\x1c\x01r\x03\x04n\
+ames\x06amounty\x0adurability\x0a\x04\0\x04buff\x03\0\x1e\x01p\x1f\x01p}\x01k!\x01\
+r\x05\x04names\x02idx\x07factiony\x05buffs\x20\x09broadcast\"\x04\0\x08creature\x03\
+\0#\x01r\x03\x04turnx\x08level-idx\x0flevel-is-stable\x7f\x04\0\x0agame-state\x03\
+\0%\x01q\x05\x02up\0\0\x04down\0\0\x04left\0\0\x05right\0\0\x05space\0\0\x04\0\x03\
+key\x03\0'\x01r\x03\x09initiator$\x12initiator-location\x01\x06amountz\x04\0\x12\
+attack-description\x03\0)\x01o\x02sy\x01p+\x04\0\x09resources\x03\0,\x01ps\x01p+\
+\x01r\x03\x05input-\x0coutput-items.\x10output-resources/\x04\0\x0econvert-param\
+s\x03\00\x01q\x0a\x04walk\0\0\x04haul\x01\x12\0\x06attack\x01\x0e\0\x0aapply-buf\
+f\x01\x10\0\x07convert\x011\0\x05equip\0\0\x07unequip\0\0\x07pick-up\0\0\x04drop\
+\0\0\x0dabandon-level\0\0\x04\0\x0cmicro-action\x03\02\x01p3\x01r\x02\x04names\x0d\
+micro-actions4\x04\0\x06action\x03\05\x01p6\x01k-\x01r\x05\x04names\x02idx\x05le\
+vely\x07actions7\x09resources8\x04\0\x0einventory-item\x03\09\x01r\x04\x08streng\
+thy\x02hpy\x05speedy\x0einventory-sizey\x04\0\x05stats\x03\0;\x01r\x02\x03max<\x07\
+current<\x04\0\x0fcharacter-stats\x03\0=\x01o\x02zz\x01q\x09\x05moved\x01?\0\x06\
+hauled\x01?\0\x08attacked\x01*\0\x12add-inventory-item\x01x\0\x15remove-inventor\
+y-item\x01x\0\x0aequip-item\x01\x13\0\x0cunequip-item\x01\x08\0\x0dgain-resource\
+\x01-\0\x0dchanged-level\0\0\x04\0\x05event\x03\0@\x03\x01\x15game:auto-rogue/ty\
+pes\x05\0\x02\x03\0\0\x03loc\x03\0\x03loc\x03\0\x01\x02\x03\0\0\x04tile\x03\0\x04\
+tile\x03\0\x03\x02\x03\0\0\x08creature\x03\0\x08creature\x03\0\x05\x02\x03\0\0\x04\
+item\x03\0\x04item\x03\0\x07\x02\x03\0\0\x0einventory-item\x03\0\x0einventory-it\
+em\x03\0\x09\x02\x03\0\0\x0fequipment-state\x03\0\x0fequipment-state\x03\0\x0b\x02\
+\x03\0\0\x0fcharacter-stats\x03\0\x0fcharacter-stats\x03\0\x0d\x02\x03\0\0\x04bu\
+ff\x03\0\x04buff\x03\0\x0f\x02\x03\0\0\x0agame-state\x03\0\x0agame-state\x03\0\x11\
+\x02\x03\0\0\x06action\x03\0\x06action\x03\0\x13\x02\x03\0\0\x05event\x03\0\x05e\
+vent\x03\0\x15\x02\x03\0\0\x07command\x03\0\x07command\x03\0\x17\x01k\x04\x01@\x01\
+\x01l\x02\0\x19\x03\0\x07tile-at\x01\x1a\x01o\x02\x02\x04\x01p\x1b\x01@\0\0\x1c\x03\
+\0\x0dvisible-tiles\x01\x1d\x01k\x06\x01@\x01\x01l\x02\0\x1e\x03\0\x0bcreature-a\
+t\x01\x1f\x01o\x02\x02\x06\x01@\0\0\x20\x03\0\x05actor\x01!\x01p\x20\x01@\0\0\"\x03\
+\0\x11visible-creatures\x01#\x01k\x08\x01@\x01\x01l\x02\0$\x03\0\x07item-at\x01%\
+\x01o\x02\x02\x08\x01p&\x01@\0\0'\x03\0\x0dvisible-items\x01(\x01p\x0a\x01@\0\0)\
+\x03\0\x09inventory\x01*\x01@\0\0\x0c\x03\0\x13get-equipment-state\x01+\x01@\0\0\
+\x0e\x03\0\x13get-character-stats\x01,\x01p\x10\x01@\0\0-\x03\0\x0fcharacter-buf\
+fs\x01.\x01@\0\0\x12\x03\0\x0eget-game-state\x01/\x01p\x14\x01@\0\00\x03\0\x07ac\
+tions\x011\x01p}\x01@\0\02\x03\0\x0aload-store\x013\x01@\x01\x05store2\x01\0\x03\
+\0\x0asave-store\x014\x01k2\x01@\x01\x04data5\x01\0\x03\0\x09broadcast\x016\x01p\
+\x02\x01@\x01\x05tiles7\x01\0\x03\0\x0fhighlight-tiles\x018\x01o\x03vvv\x01k9\x01\
+@\x01\x05color:\x01\0\x03\0\x0fhighlight-actor\x01;\x01p\x16\x01@\0\0<\x03\0\x06\
+events\x01=\x01@\0\05\x03\0\x0bconfig-data\x01>\x01@\x01\x04data2\x01\0\x03\0\x0c\
+editor-debug\x01?\x04\0\x0deditor-config\x01>\x01@\0\0\x18\x04\0\x04step\x01@\x04\
+\x01\x1dgame:auto-rogue/auto-rogue-ai\x04\0\x0b\x13\x01\0\x0dauto-rogue-ai\x03\0\
+\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.215.0\x10wit-bi\
+ndgen-rust\x060.30.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

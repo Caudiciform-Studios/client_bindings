@@ -15,6 +15,7 @@ interface types {
         name: string,
         id: s64,
         faction: u32,
+        buffs: list<buff>,
         broadcast: option<list<u8>>,
     }
     record item {
@@ -187,6 +188,7 @@ world auto-rogue-ai {
     import broadcast: func(data:option<list<u8>>);
 
     import highlight-tiles: func(tiles: list<loc>);
+    import highlight-actor: func(color: option<tuple<f32, f32, f32>>);
 
     import events: func() -> list<event>;
 

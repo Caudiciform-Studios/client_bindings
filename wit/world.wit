@@ -14,7 +14,7 @@ interface types {
     record creature {
         name: string,
         id: s64,
-        faction: u32,
+        faction: s64,
         buffs: list<buff>,
         broadcast: option<list<u8>>,
     }

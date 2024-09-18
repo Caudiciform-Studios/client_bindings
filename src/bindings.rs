@@ -108,8 +108,8 @@ pub fn visible_tiles() -> _rt::Vec<(Loc, Tile)> {
 pub fn creature_at(l: Loc) -> Option<Creature> {
     unsafe {
         #[repr(align(8))]
-        struct RetArea([::core::mem::MaybeUninit<u8>; 48]);
-        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 48]);
+        struct RetArea([::core::mem::MaybeUninit<u8>; 56]);
+        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 56]);
         let game::auto_rogue::types::Loc { x: x0, y: y0 } = l;
         let ptr1 = ret_area.0.as_mut_ptr().cast::<u8>();
         #[cfg(target_arch = "wasm32")]
@@ -133,9 +133,9 @@ pub fn creature_at(l: Loc) -> Option<Creature> {
                     let len5 = l4;
                     let bytes5 = _rt::Vec::from_raw_parts(l3.cast(), len5, len5);
                     let l6 = *ptr1.add(16).cast::<i64>();
-                    let l7 = *ptr1.add(24).cast::<i32>();
-                    let l8 = *ptr1.add(28).cast::<*mut u8>();
-                    let l9 = *ptr1.add(32).cast::<usize>();
+                    let l7 = *ptr1.add(24).cast::<i64>();
+                    let l8 = *ptr1.add(32).cast::<*mut u8>();
+                    let l9 = *ptr1.add(36).cast::<usize>();
                     let base17 = l8;
                     let len17 = l9;
                     let mut result17 = _rt::Vec::with_capacity(len17);
@@ -176,18 +176,18 @@ pub fn creature_at(l: Loc) -> Option<Creature> {
                         result17.push(e17);
                     }
                     _rt::cabi_dealloc(base17, len17 * 20, 4);
-                    let l18 = i32::from(*ptr1.add(36).cast::<u8>());
+                    let l18 = i32::from(*ptr1.add(40).cast::<u8>());
                     game::auto_rogue::types::Creature {
                         name: _rt::string_lift(bytes5),
                         id: l6,
-                        faction: l7 as u32,
+                        faction: l7,
                         buffs: result17,
                         broadcast: match l18 {
                             0 => None,
                             1 => {
                                 let e = {
-                                    let l19 = *ptr1.add(40).cast::<*mut u8>();
-                                    let l20 = *ptr1.add(44).cast::<usize>();
+                                    let l19 = *ptr1.add(44).cast::<*mut u8>();
+                                    let l20 = *ptr1.add(48).cast::<usize>();
                                     let len21 = l20;
                                     _rt::Vec::from_raw_parts(l19.cast(), len21, len21)
                                 };
@@ -207,8 +207,8 @@ pub fn creature_at(l: Loc) -> Option<Creature> {
 pub fn actor() -> (Loc, Creature) {
     unsafe {
         #[repr(align(8))]
-        struct RetArea([::core::mem::MaybeUninit<u8>; 48]);
-        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 48]);
+        struct RetArea([::core::mem::MaybeUninit<u8>; 56]);
+        let mut ret_area = RetArea([::core::mem::MaybeUninit::uninit(); 56]);
         let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
         #[cfg(target_arch = "wasm32")]
         #[link(wasm_import_module = "$root")]
@@ -228,9 +228,9 @@ pub fn actor() -> (Loc, Creature) {
         let len5 = l4;
         let bytes5 = _rt::Vec::from_raw_parts(l3.cast(), len5, len5);
         let l6 = *ptr0.add(16).cast::<i64>();
-        let l7 = *ptr0.add(24).cast::<i32>();
-        let l8 = *ptr0.add(28).cast::<*mut u8>();
-        let l9 = *ptr0.add(32).cast::<usize>();
+        let l7 = *ptr0.add(24).cast::<i64>();
+        let l8 = *ptr0.add(32).cast::<*mut u8>();
+        let l9 = *ptr0.add(36).cast::<usize>();
         let base17 = l8;
         let len17 = l9;
         let mut result17 = _rt::Vec::with_capacity(len17);
@@ -267,7 +267,7 @@ pub fn actor() -> (Loc, Creature) {
             result17.push(e17);
         }
         _rt::cabi_dealloc(base17, len17 * 20, 4);
-        let l18 = i32::from(*ptr0.add(36).cast::<u8>());
+        let l18 = i32::from(*ptr0.add(40).cast::<u8>());
         (
             game::auto_rogue::types::Loc {
                 x: l1,
@@ -276,14 +276,14 @@ pub fn actor() -> (Loc, Creature) {
             game::auto_rogue::types::Creature {
                 name: _rt::string_lift(bytes5),
                 id: l6,
-                faction: l7 as u32,
+                faction: l7,
                 buffs: result17,
                 broadcast: match l18 {
                     0 => None,
                     1 => {
                         let e = {
-                            let l19 = *ptr0.add(40).cast::<*mut u8>();
-                            let l20 = *ptr0.add(44).cast::<usize>();
+                            let l19 = *ptr0.add(44).cast::<*mut u8>();
+                            let l20 = *ptr0.add(48).cast::<usize>();
                             let len21 = l20;
                             _rt::Vec::from_raw_parts(l19.cast(), len21, len21)
                         };
@@ -319,7 +319,7 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
         let len24 = l2;
         let mut result24 = _rt::Vec::with_capacity(len24);
         for i in 0..len24 {
-            let base = base24.add(i * 48);
+            let base = base24.add(i * 56);
             let e24 = {
                 let l3 = *base.add(0).cast::<i32>();
                 let l4 = *base.add(4).cast::<i32>();
@@ -328,9 +328,9 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
                 let len7 = l6;
                 let bytes7 = _rt::Vec::from_raw_parts(l5.cast(), len7, len7);
                 let l8 = *base.add(16).cast::<i64>();
-                let l9 = *base.add(24).cast::<i32>();
-                let l10 = *base.add(28).cast::<*mut u8>();
-                let l11 = *base.add(32).cast::<usize>();
+                let l9 = *base.add(24).cast::<i64>();
+                let l10 = *base.add(32).cast::<*mut u8>();
+                let l11 = *base.add(36).cast::<usize>();
                 let base19 = l10;
                 let len19 = l11;
                 let mut result19 = _rt::Vec::with_capacity(len19);
@@ -367,7 +367,7 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
                     result19.push(e19);
                 }
                 _rt::cabi_dealloc(base19, len19 * 20, 4);
-                let l20 = i32::from(*base.add(36).cast::<u8>());
+                let l20 = i32::from(*base.add(40).cast::<u8>());
                 (
                     game::auto_rogue::types::Loc {
                         x: l3,
@@ -376,14 +376,14 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
                     game::auto_rogue::types::Creature {
                         name: _rt::string_lift(bytes7),
                         id: l8,
-                        faction: l9 as u32,
+                        faction: l9,
                         buffs: result19,
                         broadcast: match l20 {
                             0 => None,
                             1 => {
                                 let e = {
-                                    let l21 = *base.add(40).cast::<*mut u8>();
-                                    let l22 = *base.add(44).cast::<usize>();
+                                    let l21 = *base.add(44).cast::<*mut u8>();
+                                    let l22 = *base.add(48).cast::<usize>();
                                     let len23 = l22;
                                     _rt::Vec::from_raw_parts(l21.cast(), len23, len23)
                                 };
@@ -396,7 +396,7 @@ pub fn visible_creatures() -> _rt::Vec<(Loc, Creature)> {
             };
             result24.push(e24);
         }
-        _rt::cabi_dealloc(base24, len24 * 48, 8);
+        _rt::cabi_dealloc(base24, len24 * 56, 8);
         result24
     }
 }
@@ -1300,7 +1300,7 @@ pub fn events() -> _rt::Vec<Event> {
         let len45 = l2;
         let mut result45 = _rt::Vec::with_capacity(len45);
         for i in 0..len45 {
-            let base = base45.add(i * 64);
+            let base = base45.add(i * 72);
             let e45 = {
                 let l3 = i32::from(*base.add(0).cast::<u8>());
                 use game::auto_rogue::types::Event as V44;
@@ -1332,9 +1332,9 @@ pub fn events() -> _rt::Vec<Event> {
                                 len10,
                             );
                             let l11 = *base.add(16).cast::<i64>();
-                            let l12 = *base.add(24).cast::<i32>();
-                            let l13 = *base.add(28).cast::<*mut u8>();
-                            let l14 = *base.add(32).cast::<usize>();
+                            let l12 = *base.add(24).cast::<i64>();
+                            let l13 = *base.add(32).cast::<*mut u8>();
+                            let l14 = *base.add(36).cast::<usize>();
                             let base22 = l13;
                             let len22 = l14;
                             let mut result22 = _rt::Vec::with_capacity(len22);
@@ -1375,22 +1375,22 @@ pub fn events() -> _rt::Vec<Event> {
                                 result22.push(e22);
                             }
                             _rt::cabi_dealloc(base22, len22 * 20, 4);
-                            let l23 = i32::from(*base.add(36).cast::<u8>());
-                            let l27 = *base.add(48).cast::<i32>();
-                            let l28 = *base.add(52).cast::<i32>();
-                            let l29 = *base.add(56).cast::<i32>();
+                            let l23 = i32::from(*base.add(40).cast::<u8>());
+                            let l27 = *base.add(56).cast::<i32>();
+                            let l28 = *base.add(60).cast::<i32>();
+                            let l29 = *base.add(64).cast::<i32>();
                             game::auto_rogue::types::AttackDescription {
                                 initiator: game::auto_rogue::types::Creature {
                                     name: _rt::string_lift(bytes10),
                                     id: l11,
-                                    faction: l12 as u32,
+                                    faction: l12,
                                     buffs: result22,
                                     broadcast: match l23 {
                                         0 => None,
                                         1 => {
                                             let e = {
-                                                let l24 = *base.add(40).cast::<*mut u8>();
-                                                let l25 = *base.add(44).cast::<usize>();
+                                                let l24 = *base.add(44).cast::<*mut u8>();
+                                                let l25 = *base.add(48).cast::<usize>();
                                                 let len26 = l25;
                                                 _rt::Vec::from_raw_parts(l24.cast(), len26, len26)
                                             };
@@ -1490,7 +1490,7 @@ pub fn events() -> _rt::Vec<Event> {
             };
             result45.push(e45);
         }
-        _rt::cabi_dealloc(base45, len45 * 64, 8);
+        _rt::cabi_dealloc(base45, len45 * 72, 8);
         result45
     }
 }
@@ -2050,7 +2050,7 @@ pub mod game {
             pub struct Creature {
                 pub name: _rt::String,
                 pub id: i64,
-                pub faction: u32,
+                pub faction: i64,
                 pub buffs: _rt::Vec<Buff>,
                 pub broadcast: Option<_rt::Vec<u8>>,
             }
@@ -2491,7 +2491,7 @@ on\x01\x01\0\x04\0\x0daction-target\x03\0\x15\x01k\x16\x01o\x02y\x17\x01q\x02\x0
 use-action\x01\x18\0\x07nothing\0\0\x04\0\x07command\x03\0\x19\x01kx\x01r\x02\x09\
 left-hand\x1b\x0aright-hand\x1b\x04\0\x0fequipment-state\x03\0\x1c\x01r\x03\x04n\
 ames\x06amounty\x0adurability\x0a\x04\0\x04buff\x03\0\x1e\x01p\x1f\x01p}\x01k!\x01\
-r\x05\x04names\x02idx\x07factiony\x05buffs\x20\x09broadcast\"\x04\0\x08creature\x03\
+r\x05\x04names\x02idx\x07factionx\x05buffs\x20\x09broadcast\"\x04\0\x08creature\x03\
 \0#\x01r\x03\x04turnx\x08level-idx\x0flevel-is-stable\x7f\x04\0\x0agame-state\x03\
 \0%\x01q\x05\x02up\0\0\x04down\0\0\x04left\0\0\x05right\0\0\x05space\0\0\x04\0\x03\
 key\x03\0'\x01r\x03\x09initiator$\x12initiator-location\x01\x06amountz\x04\0\x12\

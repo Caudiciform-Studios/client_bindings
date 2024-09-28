@@ -67,10 +67,23 @@ interface types {
         durability: buff-durability,
     }
 
+    variant convert-cost {
+        fixed(resources),
+        increase-per-use(tuple<resources, resources>),
+    }
+
+    variant convert-output {
+        item(string),
+        resources(resources),
+        population(string),
+        tower-height(u32),
+        tower-finish,
+    }
+
     record convert-params {
-        input: resources,
-        output-items: list<string>,
-        output-resources: list<tuple<string, u32>>,
+        input: convert-cost,
+        output: list<convert-output>,
+        id: s64,
     }
 
     record haul-params {

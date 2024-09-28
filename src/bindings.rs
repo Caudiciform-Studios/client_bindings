@@ -556,12 +556,12 @@ pub fn inventory() -> _rt::Vec<InventoryItem> {
         wit_import(ptr0);
         let l1 = *ptr0.add(0).cast::<*mut u8>();
         let l2 = *ptr0.add(4).cast::<usize>();
-        let base58 = l1;
-        let len58 = l2;
-        let mut result58 = _rt::Vec::with_capacity(len58);
-        for i in 0..len58 {
-            let base = base58.add(i * 40);
-            let e58 = {
+        let base81 = l1;
+        let len81 = l2;
+        let mut result81 = _rt::Vec::with_capacity(len81);
+        for i in 0..len81 {
+            let base = base81.add(i * 40);
+            let e81 = {
                 let l3 = *base.add(0).cast::<*mut u8>();
                 let l4 = *base.add(4).cast::<usize>();
                 let len5 = l4;
@@ -570,67 +570,67 @@ pub fn inventory() -> _rt::Vec<InventoryItem> {
                 let l7 = *base.add(16).cast::<i32>();
                 let l8 = *base.add(20).cast::<*mut u8>();
                 let l9 = *base.add(24).cast::<usize>();
-                let base49 = l8;
-                let len49 = l9;
-                let mut result49 = _rt::Vec::with_capacity(len49);
-                for i in 0..len49 {
-                    let base = base49.add(i * 16);
-                    let e49 = {
+                let base72 = l8;
+                let len72 = l9;
+                let mut result72 = _rt::Vec::with_capacity(len72);
+                for i in 0..len72 {
+                    let base = base72.add(i * 16);
+                    let e72 = {
                         let l10 = *base.add(0).cast::<*mut u8>();
                         let l11 = *base.add(4).cast::<usize>();
                         let len12 = l11;
                         let bytes12 = _rt::Vec::from_raw_parts(l10.cast(), len12, len12);
                         let l13 = *base.add(8).cast::<*mut u8>();
                         let l14 = *base.add(12).cast::<usize>();
-                        let base48 = l13;
-                        let len48 = l14;
-                        let mut result48 = _rt::Vec::with_capacity(len48);
-                        for i in 0..len48 {
-                            let base = base48.add(i * 28);
-                            let e48 = {
+                        let base71 = l13;
+                        let len71 = l14;
+                        let mut result71 = _rt::Vec::with_capacity(len71);
+                        for i in 0..len71 {
+                            let base = base71.add(i * 48);
+                            let e71 = {
                                 let l15 = i32::from(*base.add(0).cast::<u8>());
-                                use game::auto_rogue::types::MicroAction as V47;
-                                let v47 = match l15 {
-                                    0 => V47::Walk,
+                                use game::auto_rogue::types::MicroAction as V70;
+                                let v70 = match l15 {
+                                    0 => V70::Walk,
                                     1 => {
-                                        let e47 = {
-                                            let l16 = *base.add(4).cast::<i32>();
+                                        let e70 = {
+                                            let l16 = *base.add(8).cast::<i32>();
                                             game::auto_rogue::types::HaulParams {
                                                 strength: l16 as u32,
                                             }
                                         };
-                                        V47::Haul(e47)
+                                        V70::Haul(e70)
                                     }
                                     2 => {
-                                        let e47 = {
-                                            let l17 = *base.add(4).cast::<i32>();
-                                            let l18 = *base.add(8).cast::<i32>();
+                                        let e70 = {
+                                            let l17 = *base.add(8).cast::<i32>();
+                                            let l18 = *base.add(12).cast::<i32>();
                                             game::auto_rogue::types::AttackParams {
                                                 amount: l17,
                                                 range: l18 as u32,
                                             }
                                         };
-                                        V47::Attack(e47)
+                                        V70::Attack(e70)
                                     }
                                     3 => {
-                                        let e47 = {
-                                            let l19 = *base.add(4).cast::<i32>();
-                                            let l20 = *base.add(8).cast::<*mut u8>();
-                                            let l21 = *base.add(12).cast::<usize>();
+                                        let e70 = {
+                                            let l19 = *base.add(8).cast::<i32>();
+                                            let l20 = *base.add(12).cast::<*mut u8>();
+                                            let l21 = *base.add(16).cast::<usize>();
                                             let len22 = l21;
                                             let bytes22 = _rt::Vec::from_raw_parts(
                                                 l20.cast(),
                                                 len22,
                                                 len22,
                                             );
-                                            let l23 = *base.add(16).cast::<i32>();
-                                            let l24 = i32::from(*base.add(20).cast::<u8>());
+                                            let l23 = *base.add(20).cast::<i32>();
+                                            let l24 = i32::from(*base.add(24).cast::<u8>());
                                             use game::auto_rogue::types::BuffDurability as V26;
                                             let v26 = match l24 {
                                                 0 => V26::Transient,
                                                 1 => {
                                                     let e26 = {
-                                                        let l25 = *base.add(24).cast::<i32>();
+                                                        let l25 = *base.add(28).cast::<i32>();
                                                         l25 as u32
                                                     };
                                                     V26::DecreasePerTurn(e26)
@@ -647,138 +647,241 @@ pub fn inventory() -> _rt::Vec<InventoryItem> {
                                                 durability: v26,
                                             }
                                         };
-                                        V47::ApplyBuff(e47)
+                                        V70::ApplyBuff(e70)
                                     }
                                     4 => {
-                                        let e47 = {
-                                            let l27 = *base.add(4).cast::<*mut u8>();
-                                            let l28 = *base.add(8).cast::<usize>();
-                                            let base33 = l27;
-                                            let len33 = l28;
-                                            let mut result33 = _rt::Vec::with_capacity(len33);
-                                            for i in 0..len33 {
-                                                let base = base33.add(i * 12);
-                                                let e33 = {
-                                                    let l29 = *base.add(0).cast::<*mut u8>();
-                                                    let l30 = *base.add(4).cast::<usize>();
-                                                    let len31 = l30;
-                                                    let bytes31 = _rt::Vec::from_raw_parts(
-                                                        l29.cast(),
-                                                        len31,
-                                                        len31,
-                                                    );
-                                                    let l32 = *base.add(8).cast::<i32>();
-                                                    (_rt::string_lift(bytes31), l32 as u32)
+                                        let e70 = {
+                                            let l27 = i32::from(*base.add(8).cast::<u8>());
+                                            use game::auto_rogue::types::ConvertCost as V49;
+                                            let v49 = match l27 {
+                                                0 => {
+                                                    let e49 = {
+                                                        let l28 = *base.add(12).cast::<*mut u8>();
+                                                        let l29 = *base.add(16).cast::<usize>();
+                                                        let base34 = l28;
+                                                        let len34 = l29;
+                                                        let mut result34 = _rt::Vec::with_capacity(len34);
+                                                        for i in 0..len34 {
+                                                            let base = base34.add(i * 12);
+                                                            let e34 = {
+                                                                let l30 = *base.add(0).cast::<*mut u8>();
+                                                                let l31 = *base.add(4).cast::<usize>();
+                                                                let len32 = l31;
+                                                                let bytes32 = _rt::Vec::from_raw_parts(
+                                                                    l30.cast(),
+                                                                    len32,
+                                                                    len32,
+                                                                );
+                                                                let l33 = *base.add(8).cast::<i32>();
+                                                                (_rt::string_lift(bytes32), l33 as u32)
+                                                            };
+                                                            result34.push(e34);
+                                                        }
+                                                        _rt::cabi_dealloc(base34, len34 * 12, 4);
+                                                        result34
+                                                    };
+                                                    V49::Fixed(e49)
+                                                }
+                                                n => {
+                                                    debug_assert_eq!(n, 1, "invalid enum discriminant");
+                                                    let e49 = {
+                                                        let l35 = *base.add(12).cast::<*mut u8>();
+                                                        let l36 = *base.add(16).cast::<usize>();
+                                                        let base41 = l35;
+                                                        let len41 = l36;
+                                                        let mut result41 = _rt::Vec::with_capacity(len41);
+                                                        for i in 0..len41 {
+                                                            let base = base41.add(i * 12);
+                                                            let e41 = {
+                                                                let l37 = *base.add(0).cast::<*mut u8>();
+                                                                let l38 = *base.add(4).cast::<usize>();
+                                                                let len39 = l38;
+                                                                let bytes39 = _rt::Vec::from_raw_parts(
+                                                                    l37.cast(),
+                                                                    len39,
+                                                                    len39,
+                                                                );
+                                                                let l40 = *base.add(8).cast::<i32>();
+                                                                (_rt::string_lift(bytes39), l40 as u32)
+                                                            };
+                                                            result41.push(e41);
+                                                        }
+                                                        _rt::cabi_dealloc(base41, len41 * 12, 4);
+                                                        let l42 = *base.add(20).cast::<*mut u8>();
+                                                        let l43 = *base.add(24).cast::<usize>();
+                                                        let base48 = l42;
+                                                        let len48 = l43;
+                                                        let mut result48 = _rt::Vec::with_capacity(len48);
+                                                        for i in 0..len48 {
+                                                            let base = base48.add(i * 12);
+                                                            let e48 = {
+                                                                let l44 = *base.add(0).cast::<*mut u8>();
+                                                                let l45 = *base.add(4).cast::<usize>();
+                                                                let len46 = l45;
+                                                                let bytes46 = _rt::Vec::from_raw_parts(
+                                                                    l44.cast(),
+                                                                    len46,
+                                                                    len46,
+                                                                );
+                                                                let l47 = *base.add(8).cast::<i32>();
+                                                                (_rt::string_lift(bytes46), l47 as u32)
+                                                            };
+                                                            result48.push(e48);
+                                                        }
+                                                        _rt::cabi_dealloc(base48, len48 * 12, 4);
+                                                        (result41, result48)
+                                                    };
+                                                    V49::IncreasePerUse(e49)
+                                                }
+                                            };
+                                            let l50 = *base.add(28).cast::<*mut u8>();
+                                            let l51 = *base.add(32).cast::<usize>();
+                                            let base68 = l50;
+                                            let len68 = l51;
+                                            let mut result68 = _rt::Vec::with_capacity(len68);
+                                            for i in 0..len68 {
+                                                let base = base68.add(i * 12);
+                                                let e68 = {
+                                                    let l52 = i32::from(*base.add(0).cast::<u8>());
+                                                    use game::auto_rogue::types::ConvertOutput as V67;
+                                                    let v67 = match l52 {
+                                                        0 => {
+                                                            let e67 = {
+                                                                let l53 = *base.add(4).cast::<*mut u8>();
+                                                                let l54 = *base.add(8).cast::<usize>();
+                                                                let len55 = l54;
+                                                                let bytes55 = _rt::Vec::from_raw_parts(
+                                                                    l53.cast(),
+                                                                    len55,
+                                                                    len55,
+                                                                );
+                                                                _rt::string_lift(bytes55)
+                                                            };
+                                                            V67::Item(e67)
+                                                        }
+                                                        1 => {
+                                                            let e67 = {
+                                                                let l56 = *base.add(4).cast::<*mut u8>();
+                                                                let l57 = *base.add(8).cast::<usize>();
+                                                                let base62 = l56;
+                                                                let len62 = l57;
+                                                                let mut result62 = _rt::Vec::with_capacity(len62);
+                                                                for i in 0..len62 {
+                                                                    let base = base62.add(i * 12);
+                                                                    let e62 = {
+                                                                        let l58 = *base.add(0).cast::<*mut u8>();
+                                                                        let l59 = *base.add(4).cast::<usize>();
+                                                                        let len60 = l59;
+                                                                        let bytes60 = _rt::Vec::from_raw_parts(
+                                                                            l58.cast(),
+                                                                            len60,
+                                                                            len60,
+                                                                        );
+                                                                        let l61 = *base.add(8).cast::<i32>();
+                                                                        (_rt::string_lift(bytes60), l61 as u32)
+                                                                    };
+                                                                    result62.push(e62);
+                                                                }
+                                                                _rt::cabi_dealloc(base62, len62 * 12, 4);
+                                                                result62
+                                                            };
+                                                            V67::Resources(e67)
+                                                        }
+                                                        2 => {
+                                                            let e67 = {
+                                                                let l63 = *base.add(4).cast::<*mut u8>();
+                                                                let l64 = *base.add(8).cast::<usize>();
+                                                                let len65 = l64;
+                                                                let bytes65 = _rt::Vec::from_raw_parts(
+                                                                    l63.cast(),
+                                                                    len65,
+                                                                    len65,
+                                                                );
+                                                                _rt::string_lift(bytes65)
+                                                            };
+                                                            V67::Population(e67)
+                                                        }
+                                                        3 => {
+                                                            let e67 = {
+                                                                let l66 = *base.add(4).cast::<i32>();
+                                                                l66 as u32
+                                                            };
+                                                            V67::TowerHeight(e67)
+                                                        }
+                                                        n => {
+                                                            debug_assert_eq!(n, 4, "invalid enum discriminant");
+                                                            V67::TowerFinish
+                                                        }
+                                                    };
+                                                    v67
                                                 };
-                                                result33.push(e33);
+                                                result68.push(e68);
                                             }
-                                            _rt::cabi_dealloc(base33, len33 * 12, 4);
-                                            let l34 = *base.add(12).cast::<*mut u8>();
-                                            let l35 = *base.add(16).cast::<usize>();
-                                            let base39 = l34;
-                                            let len39 = l35;
-                                            let mut result39 = _rt::Vec::with_capacity(len39);
-                                            for i in 0..len39 {
-                                                let base = base39.add(i * 8);
-                                                let e39 = {
-                                                    let l36 = *base.add(0).cast::<*mut u8>();
-                                                    let l37 = *base.add(4).cast::<usize>();
-                                                    let len38 = l37;
-                                                    let bytes38 = _rt::Vec::from_raw_parts(
-                                                        l36.cast(),
-                                                        len38,
-                                                        len38,
-                                                    );
-                                                    _rt::string_lift(bytes38)
-                                                };
-                                                result39.push(e39);
-                                            }
-                                            _rt::cabi_dealloc(base39, len39 * 8, 4);
-                                            let l40 = *base.add(20).cast::<*mut u8>();
-                                            let l41 = *base.add(24).cast::<usize>();
-                                            let base46 = l40;
-                                            let len46 = l41;
-                                            let mut result46 = _rt::Vec::with_capacity(len46);
-                                            for i in 0..len46 {
-                                                let base = base46.add(i * 12);
-                                                let e46 = {
-                                                    let l42 = *base.add(0).cast::<*mut u8>();
-                                                    let l43 = *base.add(4).cast::<usize>();
-                                                    let len44 = l43;
-                                                    let bytes44 = _rt::Vec::from_raw_parts(
-                                                        l42.cast(),
-                                                        len44,
-                                                        len44,
-                                                    );
-                                                    let l45 = *base.add(8).cast::<i32>();
-                                                    (_rt::string_lift(bytes44), l45 as u32)
-                                                };
-                                                result46.push(e46);
-                                            }
-                                            _rt::cabi_dealloc(base46, len46 * 12, 4);
+                                            _rt::cabi_dealloc(base68, len68 * 12, 4);
+                                            let l69 = *base.add(40).cast::<i64>();
                                             game::auto_rogue::types::ConvertParams {
-                                                input: result33,
-                                                output_items: result39,
-                                                output_resources: result46,
+                                                input: v49,
+                                                output: result68,
+                                                id: l69,
                                             }
                                         };
-                                        V47::Convert(e47)
+                                        V70::Convert(e70)
                                     }
-                                    5 => V47::Equip,
-                                    6 => V47::Unequip,
-                                    7 => V47::PickUp,
-                                    8 => V47::Drop,
+                                    5 => V70::Equip,
+                                    6 => V70::Unequip,
+                                    7 => V70::PickUp,
+                                    8 => V70::Drop,
                                     n => {
                                         debug_assert_eq!(n, 9, "invalid enum discriminant");
-                                        V47::AbandonLevel
+                                        V70::AbandonLevel
                                     }
                                 };
-                                v47
+                                v70
                             };
-                            result48.push(e48);
+                            result71.push(e71);
                         }
-                        _rt::cabi_dealloc(base48, len48 * 28, 4);
+                        _rt::cabi_dealloc(base71, len71 * 48, 8);
                         game::auto_rogue::types::Action {
                             name: _rt::string_lift(bytes12),
-                            micro_actions: result48,
+                            micro_actions: result71,
                         }
                     };
-                    result49.push(e49);
+                    result72.push(e72);
                 }
-                _rt::cabi_dealloc(base49, len49 * 16, 4);
-                let l50 = i32::from(*base.add(28).cast::<u8>());
+                _rt::cabi_dealloc(base72, len72 * 16, 4);
+                let l73 = i32::from(*base.add(28).cast::<u8>());
                 game::auto_rogue::types::InventoryItem {
                     name: _rt::string_lift(bytes5),
                     id: l6,
                     level: l7 as u32,
-                    actions: result49,
-                    resources: match l50 {
+                    actions: result72,
+                    resources: match l73 {
                         0 => None,
                         1 => {
                             let e = {
-                                let l51 = *base.add(32).cast::<*mut u8>();
-                                let l52 = *base.add(36).cast::<usize>();
-                                let base57 = l51;
-                                let len57 = l52;
-                                let mut result57 = _rt::Vec::with_capacity(len57);
-                                for i in 0..len57 {
-                                    let base = base57.add(i * 12);
-                                    let e57 = {
-                                        let l53 = *base.add(0).cast::<*mut u8>();
-                                        let l54 = *base.add(4).cast::<usize>();
-                                        let len55 = l54;
-                                        let bytes55 = _rt::Vec::from_raw_parts(
-                                            l53.cast(),
-                                            len55,
-                                            len55,
+                                let l74 = *base.add(32).cast::<*mut u8>();
+                                let l75 = *base.add(36).cast::<usize>();
+                                let base80 = l74;
+                                let len80 = l75;
+                                let mut result80 = _rt::Vec::with_capacity(len80);
+                                for i in 0..len80 {
+                                    let base = base80.add(i * 12);
+                                    let e80 = {
+                                        let l76 = *base.add(0).cast::<*mut u8>();
+                                        let l77 = *base.add(4).cast::<usize>();
+                                        let len78 = l77;
+                                        let bytes78 = _rt::Vec::from_raw_parts(
+                                            l76.cast(),
+                                            len78,
+                                            len78,
                                         );
-                                        let l56 = *base.add(8).cast::<i32>();
-                                        (_rt::string_lift(bytes55), l56 as u32)
+                                        let l79 = *base.add(8).cast::<i32>();
+                                        (_rt::string_lift(bytes78), l79 as u32)
                                     };
-                                    result57.push(e57);
+                                    result80.push(e80);
                                 }
-                                _rt::cabi_dealloc(base57, len57 * 12, 4);
-                                result57
+                                _rt::cabi_dealloc(base80, len80 * 12, 4);
+                                result80
                             };
                             Some(e)
                         }
@@ -786,10 +889,10 @@ pub fn inventory() -> _rt::Vec<InventoryItem> {
                     },
                 }
             };
-            result58.push(e58);
+            result81.push(e81);
         }
-        _rt::cabi_dealloc(base58, len58 * 40, 8);
-        result58
+        _rt::cabi_dealloc(base81, len81 * 40, 8);
+        result81
     }
 }
 #[allow(unused_unsafe, clippy::all)]
@@ -987,67 +1090,67 @@ pub fn actions() -> _rt::Vec<Action> {
         wit_import(ptr0);
         let l1 = *ptr0.add(0).cast::<*mut u8>();
         let l2 = *ptr0.add(4).cast::<usize>();
-        let base42 = l1;
-        let len42 = l2;
-        let mut result42 = _rt::Vec::with_capacity(len42);
-        for i in 0..len42 {
-            let base = base42.add(i * 16);
-            let e42 = {
+        let base65 = l1;
+        let len65 = l2;
+        let mut result65 = _rt::Vec::with_capacity(len65);
+        for i in 0..len65 {
+            let base = base65.add(i * 16);
+            let e65 = {
                 let l3 = *base.add(0).cast::<*mut u8>();
                 let l4 = *base.add(4).cast::<usize>();
                 let len5 = l4;
                 let bytes5 = _rt::Vec::from_raw_parts(l3.cast(), len5, len5);
                 let l6 = *base.add(8).cast::<*mut u8>();
                 let l7 = *base.add(12).cast::<usize>();
-                let base41 = l6;
-                let len41 = l7;
-                let mut result41 = _rt::Vec::with_capacity(len41);
-                for i in 0..len41 {
-                    let base = base41.add(i * 28);
-                    let e41 = {
+                let base64 = l6;
+                let len64 = l7;
+                let mut result64 = _rt::Vec::with_capacity(len64);
+                for i in 0..len64 {
+                    let base = base64.add(i * 48);
+                    let e64 = {
                         let l8 = i32::from(*base.add(0).cast::<u8>());
-                        use game::auto_rogue::types::MicroAction as V40;
-                        let v40 = match l8 {
-                            0 => V40::Walk,
+                        use game::auto_rogue::types::MicroAction as V63;
+                        let v63 = match l8 {
+                            0 => V63::Walk,
                             1 => {
-                                let e40 = {
-                                    let l9 = *base.add(4).cast::<i32>();
+                                let e63 = {
+                                    let l9 = *base.add(8).cast::<i32>();
                                     game::auto_rogue::types::HaulParams {
                                         strength: l9 as u32,
                                     }
                                 };
-                                V40::Haul(e40)
+                                V63::Haul(e63)
                             }
                             2 => {
-                                let e40 = {
-                                    let l10 = *base.add(4).cast::<i32>();
-                                    let l11 = *base.add(8).cast::<i32>();
+                                let e63 = {
+                                    let l10 = *base.add(8).cast::<i32>();
+                                    let l11 = *base.add(12).cast::<i32>();
                                     game::auto_rogue::types::AttackParams {
                                         amount: l10,
                                         range: l11 as u32,
                                     }
                                 };
-                                V40::Attack(e40)
+                                V63::Attack(e63)
                             }
                             3 => {
-                                let e40 = {
-                                    let l12 = *base.add(4).cast::<i32>();
-                                    let l13 = *base.add(8).cast::<*mut u8>();
-                                    let l14 = *base.add(12).cast::<usize>();
+                                let e63 = {
+                                    let l12 = *base.add(8).cast::<i32>();
+                                    let l13 = *base.add(12).cast::<*mut u8>();
+                                    let l14 = *base.add(16).cast::<usize>();
                                     let len15 = l14;
                                     let bytes15 = _rt::Vec::from_raw_parts(
                                         l13.cast(),
                                         len15,
                                         len15,
                                     );
-                                    let l16 = *base.add(16).cast::<i32>();
-                                    let l17 = i32::from(*base.add(20).cast::<u8>());
+                                    let l16 = *base.add(20).cast::<i32>();
+                                    let l17 = i32::from(*base.add(24).cast::<u8>());
                                     use game::auto_rogue::types::BuffDurability as V19;
                                     let v19 = match l17 {
                                         0 => V19::Transient,
                                         1 => {
                                             let e19 = {
-                                                let l18 = *base.add(24).cast::<i32>();
+                                                let l18 = *base.add(28).cast::<i32>();
                                                 l18 as u32
                                             };
                                             V19::DecreasePerTurn(e19)
@@ -1064,106 +1167,209 @@ pub fn actions() -> _rt::Vec<Action> {
                                         durability: v19,
                                     }
                                 };
-                                V40::ApplyBuff(e40)
+                                V63::ApplyBuff(e63)
                             }
                             4 => {
-                                let e40 = {
-                                    let l20 = *base.add(4).cast::<*mut u8>();
-                                    let l21 = *base.add(8).cast::<usize>();
-                                    let base26 = l20;
-                                    let len26 = l21;
-                                    let mut result26 = _rt::Vec::with_capacity(len26);
-                                    for i in 0..len26 {
-                                        let base = base26.add(i * 12);
-                                        let e26 = {
-                                            let l22 = *base.add(0).cast::<*mut u8>();
-                                            let l23 = *base.add(4).cast::<usize>();
-                                            let len24 = l23;
-                                            let bytes24 = _rt::Vec::from_raw_parts(
-                                                l22.cast(),
-                                                len24,
-                                                len24,
-                                            );
-                                            let l25 = *base.add(8).cast::<i32>();
-                                            (_rt::string_lift(bytes24), l25 as u32)
+                                let e63 = {
+                                    let l20 = i32::from(*base.add(8).cast::<u8>());
+                                    use game::auto_rogue::types::ConvertCost as V42;
+                                    let v42 = match l20 {
+                                        0 => {
+                                            let e42 = {
+                                                let l21 = *base.add(12).cast::<*mut u8>();
+                                                let l22 = *base.add(16).cast::<usize>();
+                                                let base27 = l21;
+                                                let len27 = l22;
+                                                let mut result27 = _rt::Vec::with_capacity(len27);
+                                                for i in 0..len27 {
+                                                    let base = base27.add(i * 12);
+                                                    let e27 = {
+                                                        let l23 = *base.add(0).cast::<*mut u8>();
+                                                        let l24 = *base.add(4).cast::<usize>();
+                                                        let len25 = l24;
+                                                        let bytes25 = _rt::Vec::from_raw_parts(
+                                                            l23.cast(),
+                                                            len25,
+                                                            len25,
+                                                        );
+                                                        let l26 = *base.add(8).cast::<i32>();
+                                                        (_rt::string_lift(bytes25), l26 as u32)
+                                                    };
+                                                    result27.push(e27);
+                                                }
+                                                _rt::cabi_dealloc(base27, len27 * 12, 4);
+                                                result27
+                                            };
+                                            V42::Fixed(e42)
+                                        }
+                                        n => {
+                                            debug_assert_eq!(n, 1, "invalid enum discriminant");
+                                            let e42 = {
+                                                let l28 = *base.add(12).cast::<*mut u8>();
+                                                let l29 = *base.add(16).cast::<usize>();
+                                                let base34 = l28;
+                                                let len34 = l29;
+                                                let mut result34 = _rt::Vec::with_capacity(len34);
+                                                for i in 0..len34 {
+                                                    let base = base34.add(i * 12);
+                                                    let e34 = {
+                                                        let l30 = *base.add(0).cast::<*mut u8>();
+                                                        let l31 = *base.add(4).cast::<usize>();
+                                                        let len32 = l31;
+                                                        let bytes32 = _rt::Vec::from_raw_parts(
+                                                            l30.cast(),
+                                                            len32,
+                                                            len32,
+                                                        );
+                                                        let l33 = *base.add(8).cast::<i32>();
+                                                        (_rt::string_lift(bytes32), l33 as u32)
+                                                    };
+                                                    result34.push(e34);
+                                                }
+                                                _rt::cabi_dealloc(base34, len34 * 12, 4);
+                                                let l35 = *base.add(20).cast::<*mut u8>();
+                                                let l36 = *base.add(24).cast::<usize>();
+                                                let base41 = l35;
+                                                let len41 = l36;
+                                                let mut result41 = _rt::Vec::with_capacity(len41);
+                                                for i in 0..len41 {
+                                                    let base = base41.add(i * 12);
+                                                    let e41 = {
+                                                        let l37 = *base.add(0).cast::<*mut u8>();
+                                                        let l38 = *base.add(4).cast::<usize>();
+                                                        let len39 = l38;
+                                                        let bytes39 = _rt::Vec::from_raw_parts(
+                                                            l37.cast(),
+                                                            len39,
+                                                            len39,
+                                                        );
+                                                        let l40 = *base.add(8).cast::<i32>();
+                                                        (_rt::string_lift(bytes39), l40 as u32)
+                                                    };
+                                                    result41.push(e41);
+                                                }
+                                                _rt::cabi_dealloc(base41, len41 * 12, 4);
+                                                (result34, result41)
+                                            };
+                                            V42::IncreasePerUse(e42)
+                                        }
+                                    };
+                                    let l43 = *base.add(28).cast::<*mut u8>();
+                                    let l44 = *base.add(32).cast::<usize>();
+                                    let base61 = l43;
+                                    let len61 = l44;
+                                    let mut result61 = _rt::Vec::with_capacity(len61);
+                                    for i in 0..len61 {
+                                        let base = base61.add(i * 12);
+                                        let e61 = {
+                                            let l45 = i32::from(*base.add(0).cast::<u8>());
+                                            use game::auto_rogue::types::ConvertOutput as V60;
+                                            let v60 = match l45 {
+                                                0 => {
+                                                    let e60 = {
+                                                        let l46 = *base.add(4).cast::<*mut u8>();
+                                                        let l47 = *base.add(8).cast::<usize>();
+                                                        let len48 = l47;
+                                                        let bytes48 = _rt::Vec::from_raw_parts(
+                                                            l46.cast(),
+                                                            len48,
+                                                            len48,
+                                                        );
+                                                        _rt::string_lift(bytes48)
+                                                    };
+                                                    V60::Item(e60)
+                                                }
+                                                1 => {
+                                                    let e60 = {
+                                                        let l49 = *base.add(4).cast::<*mut u8>();
+                                                        let l50 = *base.add(8).cast::<usize>();
+                                                        let base55 = l49;
+                                                        let len55 = l50;
+                                                        let mut result55 = _rt::Vec::with_capacity(len55);
+                                                        for i in 0..len55 {
+                                                            let base = base55.add(i * 12);
+                                                            let e55 = {
+                                                                let l51 = *base.add(0).cast::<*mut u8>();
+                                                                let l52 = *base.add(4).cast::<usize>();
+                                                                let len53 = l52;
+                                                                let bytes53 = _rt::Vec::from_raw_parts(
+                                                                    l51.cast(),
+                                                                    len53,
+                                                                    len53,
+                                                                );
+                                                                let l54 = *base.add(8).cast::<i32>();
+                                                                (_rt::string_lift(bytes53), l54 as u32)
+                                                            };
+                                                            result55.push(e55);
+                                                        }
+                                                        _rt::cabi_dealloc(base55, len55 * 12, 4);
+                                                        result55
+                                                    };
+                                                    V60::Resources(e60)
+                                                }
+                                                2 => {
+                                                    let e60 = {
+                                                        let l56 = *base.add(4).cast::<*mut u8>();
+                                                        let l57 = *base.add(8).cast::<usize>();
+                                                        let len58 = l57;
+                                                        let bytes58 = _rt::Vec::from_raw_parts(
+                                                            l56.cast(),
+                                                            len58,
+                                                            len58,
+                                                        );
+                                                        _rt::string_lift(bytes58)
+                                                    };
+                                                    V60::Population(e60)
+                                                }
+                                                3 => {
+                                                    let e60 = {
+                                                        let l59 = *base.add(4).cast::<i32>();
+                                                        l59 as u32
+                                                    };
+                                                    V60::TowerHeight(e60)
+                                                }
+                                                n => {
+                                                    debug_assert_eq!(n, 4, "invalid enum discriminant");
+                                                    V60::TowerFinish
+                                                }
+                                            };
+                                            v60
                                         };
-                                        result26.push(e26);
+                                        result61.push(e61);
                                     }
-                                    _rt::cabi_dealloc(base26, len26 * 12, 4);
-                                    let l27 = *base.add(12).cast::<*mut u8>();
-                                    let l28 = *base.add(16).cast::<usize>();
-                                    let base32 = l27;
-                                    let len32 = l28;
-                                    let mut result32 = _rt::Vec::with_capacity(len32);
-                                    for i in 0..len32 {
-                                        let base = base32.add(i * 8);
-                                        let e32 = {
-                                            let l29 = *base.add(0).cast::<*mut u8>();
-                                            let l30 = *base.add(4).cast::<usize>();
-                                            let len31 = l30;
-                                            let bytes31 = _rt::Vec::from_raw_parts(
-                                                l29.cast(),
-                                                len31,
-                                                len31,
-                                            );
-                                            _rt::string_lift(bytes31)
-                                        };
-                                        result32.push(e32);
-                                    }
-                                    _rt::cabi_dealloc(base32, len32 * 8, 4);
-                                    let l33 = *base.add(20).cast::<*mut u8>();
-                                    let l34 = *base.add(24).cast::<usize>();
-                                    let base39 = l33;
-                                    let len39 = l34;
-                                    let mut result39 = _rt::Vec::with_capacity(len39);
-                                    for i in 0..len39 {
-                                        let base = base39.add(i * 12);
-                                        let e39 = {
-                                            let l35 = *base.add(0).cast::<*mut u8>();
-                                            let l36 = *base.add(4).cast::<usize>();
-                                            let len37 = l36;
-                                            let bytes37 = _rt::Vec::from_raw_parts(
-                                                l35.cast(),
-                                                len37,
-                                                len37,
-                                            );
-                                            let l38 = *base.add(8).cast::<i32>();
-                                            (_rt::string_lift(bytes37), l38 as u32)
-                                        };
-                                        result39.push(e39);
-                                    }
-                                    _rt::cabi_dealloc(base39, len39 * 12, 4);
+                                    _rt::cabi_dealloc(base61, len61 * 12, 4);
+                                    let l62 = *base.add(40).cast::<i64>();
                                     game::auto_rogue::types::ConvertParams {
-                                        input: result26,
-                                        output_items: result32,
-                                        output_resources: result39,
+                                        input: v42,
+                                        output: result61,
+                                        id: l62,
                                     }
                                 };
-                                V40::Convert(e40)
+                                V63::Convert(e63)
                             }
-                            5 => V40::Equip,
-                            6 => V40::Unequip,
-                            7 => V40::PickUp,
-                            8 => V40::Drop,
+                            5 => V63::Equip,
+                            6 => V63::Unequip,
+                            7 => V63::PickUp,
+                            8 => V63::Drop,
                             n => {
                                 debug_assert_eq!(n, 9, "invalid enum discriminant");
-                                V40::AbandonLevel
+                                V63::AbandonLevel
                             }
                         };
-                        v40
+                        v63
                     };
-                    result41.push(e41);
+                    result64.push(e64);
                 }
-                _rt::cabi_dealloc(base41, len41 * 28, 4);
+                _rt::cabi_dealloc(base64, len64 * 48, 8);
                 game::auto_rogue::types::Action {
                     name: _rt::string_lift(bytes5),
-                    micro_actions: result41,
+                    micro_actions: result64,
                 }
             };
-            result42.push(e42);
+            result65.push(e65);
         }
-        _rt::cabi_dealloc(base42, len42 * 16, 4);
-        result42
+        _rt::cabi_dealloc(base65, len65 * 16, 4);
+        result65
     }
 }
 #[allow(unused_unsafe, clippy::all)]
@@ -2107,10 +2313,64 @@ pub mod game {
             }
             pub type Resources = _rt::Vec<(_rt::String, u32)>;
             #[derive(Clone)]
+            pub enum ConvertCost {
+                Fixed(Resources),
+                IncreasePerUse((Resources, Resources)),
+            }
+            impl ::core::fmt::Debug for ConvertCost {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    match self {
+                        ConvertCost::Fixed(e) => {
+                            f.debug_tuple("ConvertCost::Fixed").field(e).finish()
+                        }
+                        ConvertCost::IncreasePerUse(e) => {
+                            f.debug_tuple("ConvertCost::IncreasePerUse")
+                                .field(e)
+                                .finish()
+                        }
+                    }
+                }
+            }
+            #[derive(Clone)]
+            pub enum ConvertOutput {
+                Item(_rt::String),
+                Resources(Resources),
+                Population(_rt::String),
+                TowerHeight(u32),
+                TowerFinish,
+            }
+            impl ::core::fmt::Debug for ConvertOutput {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    match self {
+                        ConvertOutput::Item(e) => {
+                            f.debug_tuple("ConvertOutput::Item").field(e).finish()
+                        }
+                        ConvertOutput::Resources(e) => {
+                            f.debug_tuple("ConvertOutput::Resources").field(e).finish()
+                        }
+                        ConvertOutput::Population(e) => {
+                            f.debug_tuple("ConvertOutput::Population").field(e).finish()
+                        }
+                        ConvertOutput::TowerHeight(e) => {
+                            f.debug_tuple("ConvertOutput::TowerHeight").field(e).finish()
+                        }
+                        ConvertOutput::TowerFinish => {
+                            f.debug_tuple("ConvertOutput::TowerFinish").finish()
+                        }
+                    }
+                }
+            }
+            #[derive(Clone)]
             pub struct ConvertParams {
-                pub input: Resources,
-                pub output_items: _rt::Vec<_rt::String>,
-                pub output_resources: _rt::Vec<(_rt::String, u32)>,
+                pub input: ConvertCost,
+                pub output: _rt::Vec<ConvertOutput>,
+                pub id: i64,
             }
             impl ::core::fmt::Debug for ConvertParams {
                 fn fmt(
@@ -2119,8 +2379,8 @@ pub mod game {
                 ) -> ::core::fmt::Result {
                     f.debug_struct("ConvertParams")
                         .field("input", &self.input)
-                        .field("output-items", &self.output_items)
-                        .field("output-resources", &self.output_resources)
+                        .field("output", &self.output)
+                        .field("id", &self.id)
                         .finish()
                 }
             }
@@ -2473,9 +2733,9 @@ macro_rules! __export_auto_rogue_ai_impl {
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.30.0:auto-rogue-ai:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2636] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xc8\x13\x01A\x02\x01\
-AY\x01BB\x01r\x02\x01xz\x01yz\x04\0\x03loc\x03\0\0\x01r\x03\x08passable\x7f\x06o\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 2761] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xc5\x14\x01A\x02\x01\
+AY\x01BF\x01r\x02\x01xz\x01yz\x04\0\x03loc\x03\0\0\x01r\x03\x08passable\x7f\x06o\
 paque\x7f\x04names\x04\0\x04tile\x03\0\x02\x01ks\x01r\x05\x02idx\x04names\x0cis-\
 furniture\x7f\x0bis-passable\x7f\x08metadata\x04\x04\0\x04item\x03\0\x05\x01q\x02\
 \x09left-hand\0\0\x0aright-hand\0\0\x04\0\x0eequipment-slot\x03\0\x07\x01q\x03\x09\
@@ -2495,43 +2755,45 @@ r\x05\x04names\x02idx\x07factionx\x05buffs\x20\x09broadcast\"\x04\0\x08creature\
 \0#\x01r\x03\x04turnx\x08level-idx\x0flevel-is-stable\x7f\x04\0\x0agame-state\x03\
 \0%\x01q\x05\x02up\0\0\x04down\0\0\x04left\0\0\x05right\0\0\x05space\0\0\x04\0\x03\
 key\x03\0'\x01r\x03\x09initiator$\x12initiator-location\x01\x06amountz\x04\0\x12\
-attack-description\x03\0)\x01o\x02sy\x01p+\x04\0\x09resources\x03\0,\x01ps\x01p+\
-\x01r\x03\x05input-\x0coutput-items.\x10output-resources/\x04\0\x0econvert-param\
-s\x03\00\x01q\x0a\x04walk\0\0\x04haul\x01\x12\0\x06attack\x01\x0e\0\x0aapply-buf\
-f\x01\x10\0\x07convert\x011\0\x05equip\0\0\x07unequip\0\0\x07pick-up\0\0\x04drop\
-\0\0\x0dabandon-level\0\0\x04\0\x0cmicro-action\x03\02\x01p3\x01r\x02\x04names\x0d\
-micro-actions4\x04\0\x06action\x03\05\x01p6\x01k-\x01r\x05\x04names\x02idx\x05le\
-vely\x07actions7\x09resources8\x04\0\x0einventory-item\x03\09\x01r\x04\x08streng\
-thy\x02hpy\x05speedy\x0einventory-sizey\x04\0\x05stats\x03\0;\x01r\x02\x03max<\x07\
-current<\x04\0\x0fcharacter-stats\x03\0=\x01o\x02zz\x01q\x09\x05moved\x01?\0\x06\
-hauled\x01?\0\x08attacked\x01*\0\x12add-inventory-item\x01x\0\x15remove-inventor\
-y-item\x01x\0\x0aequip-item\x01\x13\0\x0cunequip-item\x01\x08\0\x0dgain-resource\
-\x01-\0\x0dchanged-level\0\0\x04\0\x05event\x03\0@\x03\x01\x15game:auto-rogue/ty\
-pes\x05\0\x02\x03\0\0\x03loc\x03\0\x03loc\x03\0\x01\x02\x03\0\0\x04tile\x03\0\x04\
-tile\x03\0\x03\x02\x03\0\0\x08creature\x03\0\x08creature\x03\0\x05\x02\x03\0\0\x04\
-item\x03\0\x04item\x03\0\x07\x02\x03\0\0\x0einventory-item\x03\0\x0einventory-it\
-em\x03\0\x09\x02\x03\0\0\x0fequipment-state\x03\0\x0fequipment-state\x03\0\x0b\x02\
-\x03\0\0\x0fcharacter-stats\x03\0\x0fcharacter-stats\x03\0\x0d\x02\x03\0\0\x04bu\
-ff\x03\0\x04buff\x03\0\x0f\x02\x03\0\0\x0agame-state\x03\0\x0agame-state\x03\0\x11\
-\x02\x03\0\0\x06action\x03\0\x06action\x03\0\x13\x02\x03\0\0\x05event\x03\0\x05e\
-vent\x03\0\x15\x02\x03\0\0\x07command\x03\0\x07command\x03\0\x17\x01k\x04\x01@\x01\
-\x01l\x02\0\x19\x03\0\x07tile-at\x01\x1a\x01o\x02\x02\x04\x01p\x1b\x01@\0\0\x1c\x03\
-\0\x0dvisible-tiles\x01\x1d\x01k\x06\x01@\x01\x01l\x02\0\x1e\x03\0\x0bcreature-a\
-t\x01\x1f\x01o\x02\x02\x06\x01@\0\0\x20\x03\0\x05actor\x01!\x01p\x20\x01@\0\0\"\x03\
-\0\x11visible-creatures\x01#\x01k\x08\x01@\x01\x01l\x02\0$\x03\0\x07item-at\x01%\
-\x01o\x02\x02\x08\x01p&\x01@\0\0'\x03\0\x0dvisible-items\x01(\x01p\x0a\x01@\0\0)\
-\x03\0\x09inventory\x01*\x01@\0\0\x0c\x03\0\x13get-equipment-state\x01+\x01@\0\0\
-\x0e\x03\0\x13get-character-stats\x01,\x01p\x10\x01@\0\0-\x03\0\x0fcharacter-buf\
-fs\x01.\x01@\0\0\x12\x03\0\x0eget-game-state\x01/\x01p\x14\x01@\0\00\x03\0\x07ac\
-tions\x011\x01p}\x01@\0\02\x03\0\x0aload-store\x013\x01@\x01\x05store2\x01\0\x03\
-\0\x0asave-store\x014\x01k2\x01@\x01\x04data5\x01\0\x03\0\x09broadcast\x016\x01p\
-\x02\x01@\x01\x05tiles7\x01\0\x03\0\x0fhighlight-tiles\x018\x01o\x03vvv\x01k9\x01\
-@\x01\x05color:\x01\0\x03\0\x0fhighlight-actor\x01;\x01p\x16\x01@\0\0<\x03\0\x06\
-events\x01=\x01@\0\05\x03\0\x0bconfig-data\x01>\x01@\x01\x04data2\x01\0\x03\0\x0c\
-editor-debug\x01?\x04\0\x0deditor-config\x01>\x01@\0\0\x18\x04\0\x04step\x01@\x04\
-\x01\x1dgame:auto-rogue/auto-rogue-ai\x04\0\x0b\x13\x01\0\x0dauto-rogue-ai\x03\0\
-\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.215.0\x10wit-bi\
-ndgen-rust\x060.30.0";
+attack-description\x03\0)\x01o\x02sy\x01p+\x04\0\x09resources\x03\0,\x01o\x02--\x01\
+q\x02\x05fixed\x01-\0\x10increase-per-use\x01.\0\x04\0\x0cconvert-cost\x03\0/\x01\
+q\x05\x04item\x01s\0\x09resources\x01-\0\x0apopulation\x01s\0\x0ctower-height\x01\
+y\0\x0ctower-finish\0\0\x04\0\x0econvert-output\x03\01\x01p2\x01r\x03\x05input0\x06\
+output3\x02idx\x04\0\x0econvert-params\x03\04\x01q\x0a\x04walk\0\0\x04haul\x01\x12\
+\0\x06attack\x01\x0e\0\x0aapply-buff\x01\x10\0\x07convert\x015\0\x05equip\0\0\x07\
+unequip\0\0\x07pick-up\0\0\x04drop\0\0\x0dabandon-level\0\0\x04\0\x0cmicro-actio\
+n\x03\06\x01p7\x01r\x02\x04names\x0dmicro-actions8\x04\0\x06action\x03\09\x01p:\x01\
+k-\x01r\x05\x04names\x02idx\x05levely\x07actions;\x09resources<\x04\0\x0einvento\
+ry-item\x03\0=\x01r\x04\x08strengthy\x02hpy\x05speedy\x0einventory-sizey\x04\0\x05\
+stats\x03\0?\x01r\x02\x03max\xc0\0\x07current\xc0\0\x04\0\x0fcharacter-stats\x03\
+\0A\x01o\x02zz\x01q\x09\x05moved\x01\xc3\0\0\x06hauled\x01\xc3\0\0\x08attacked\x01\
+*\0\x12add-inventory-item\x01x\0\x15remove-inventory-item\x01x\0\x0aequip-item\x01\
+\x13\0\x0cunequip-item\x01\x08\0\x0dgain-resource\x01-\0\x0dchanged-level\0\0\x04\
+\0\x05event\x03\0D\x03\x01\x15game:auto-rogue/types\x05\0\x02\x03\0\0\x03loc\x03\
+\0\x03loc\x03\0\x01\x02\x03\0\0\x04tile\x03\0\x04tile\x03\0\x03\x02\x03\0\0\x08c\
+reature\x03\0\x08creature\x03\0\x05\x02\x03\0\0\x04item\x03\0\x04item\x03\0\x07\x02\
+\x03\0\0\x0einventory-item\x03\0\x0einventory-item\x03\0\x09\x02\x03\0\0\x0fequi\
+pment-state\x03\0\x0fequipment-state\x03\0\x0b\x02\x03\0\0\x0fcharacter-stats\x03\
+\0\x0fcharacter-stats\x03\0\x0d\x02\x03\0\0\x04buff\x03\0\x04buff\x03\0\x0f\x02\x03\
+\0\0\x0agame-state\x03\0\x0agame-state\x03\0\x11\x02\x03\0\0\x06action\x03\0\x06\
+action\x03\0\x13\x02\x03\0\0\x05event\x03\0\x05event\x03\0\x15\x02\x03\0\0\x07co\
+mmand\x03\0\x07command\x03\0\x17\x01k\x04\x01@\x01\x01l\x02\0\x19\x03\0\x07tile-\
+at\x01\x1a\x01o\x02\x02\x04\x01p\x1b\x01@\0\0\x1c\x03\0\x0dvisible-tiles\x01\x1d\
+\x01k\x06\x01@\x01\x01l\x02\0\x1e\x03\0\x0bcreature-at\x01\x1f\x01o\x02\x02\x06\x01\
+@\0\0\x20\x03\0\x05actor\x01!\x01p\x20\x01@\0\0\"\x03\0\x11visible-creatures\x01\
+#\x01k\x08\x01@\x01\x01l\x02\0$\x03\0\x07item-at\x01%\x01o\x02\x02\x08\x01p&\x01\
+@\0\0'\x03\0\x0dvisible-items\x01(\x01p\x0a\x01@\0\0)\x03\0\x09inventory\x01*\x01\
+@\0\0\x0c\x03\0\x13get-equipment-state\x01+\x01@\0\0\x0e\x03\0\x13get-character-\
+stats\x01,\x01p\x10\x01@\0\0-\x03\0\x0fcharacter-buffs\x01.\x01@\0\0\x12\x03\0\x0e\
+get-game-state\x01/\x01p\x14\x01@\0\00\x03\0\x07actions\x011\x01p}\x01@\0\02\x03\
+\0\x0aload-store\x013\x01@\x01\x05store2\x01\0\x03\0\x0asave-store\x014\x01k2\x01\
+@\x01\x04data5\x01\0\x03\0\x09broadcast\x016\x01p\x02\x01@\x01\x05tiles7\x01\0\x03\
+\0\x0fhighlight-tiles\x018\x01o\x03vvv\x01k9\x01@\x01\x05color:\x01\0\x03\0\x0fh\
+ighlight-actor\x01;\x01p\x16\x01@\0\0<\x03\0\x06events\x01=\x01@\0\05\x03\0\x0bc\
+onfig-data\x01>\x01@\x01\x04data2\x01\0\x03\0\x0ceditor-debug\x01?\x04\0\x0dedit\
+or-config\x01>\x01@\0\0\x18\x04\0\x04step\x01@\x04\x01\x1dgame:auto-rogue/auto-r\
+ogue-ai\x04\0\x0b\x13\x01\0\x0dauto-rogue-ai\x03\0\0\0G\x09producers\x01\x0cproc\
+essed-by\x02\x0dwit-component\x070.215.0\x10wit-bindgen-rust\x060.30.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {
